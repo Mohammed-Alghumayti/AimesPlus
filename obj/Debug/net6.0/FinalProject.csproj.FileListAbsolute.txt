@@ -1,0 +1,16 @@
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.csproj.AssemblyReference.cache
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.AssemblyInfoInputs.cache
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.AssemblyInfo.cs
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.csproj.CoreCompileInputs.cache
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.RazorAssemblyInfo.cache
+C:\Users\Rakanz\source\repos\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.RazorAssemblyInfo.cs
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.csproj.AssemblyReference.cache
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.AssemblyInfoInputs.cache
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.AssemblyInfo.cs
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.csproj.CoreCompileInputs.cache
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.RazorAssemblyInfo.cache
+C:\Users\m7md\OneDrive - SFC Hackathon\Desktop\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.RazorAssemblyInfo.cs

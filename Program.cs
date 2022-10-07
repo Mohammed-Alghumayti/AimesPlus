@@ -1,7 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.Configuration;
+using SeniorProject.Data;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+    
+    //db connection (added builder before services because it changed in .net6)
+    builder.Services.AddDbContextPool<ApplicationDbContext>(
+               options => options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbConnection")));
+
+
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 
@@ -22,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

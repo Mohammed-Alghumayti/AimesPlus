@@ -1,7 +1,8 @@
-﻿namespace FinalProject.Models
+﻿namespace SeniorProject.Models
 {
     public class Course
     {
+        public int Id { get; set; }
         public int Code { get; set; }
         public string Name { get; set; }
         public Topics Topics { get; set; }

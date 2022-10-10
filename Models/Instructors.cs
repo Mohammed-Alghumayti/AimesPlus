@@ -6,7 +6,7 @@
         public int AcademicID { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
-        public Course? Courses { get; set; }
-        // course is nullable in case of adminstrator
+        public List<Course>? Courses { get; set; }
+        
     }
 }

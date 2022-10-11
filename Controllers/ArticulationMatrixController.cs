@@ -2,24 +2,11 @@
 
 namespace SeniorProject.Controllers
 {
-    public class HomeController : Controller
+    public class ArticulationMatrixController : Controller
     {
-        
-
         public IActionResult Index()
         {
             return View();
         }
-
-
-
-
-
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
     }
 }

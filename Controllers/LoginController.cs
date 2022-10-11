@@ -47,12 +47,14 @@ namespace SeniorProject.Controllers
             {
                 if (currentMember.Role == "admin")
                 {
+                    
                     return View();
 
                 }
                 else
                 {
-                    return RedirectToAction("Instruct");
+                    ViewData["thisdata"] = currentMember;
+                    return View("/Views/Home/Index.cshtml");
                 }
             }else
             { TempData["Message"] = "Wrong Password or id"; }

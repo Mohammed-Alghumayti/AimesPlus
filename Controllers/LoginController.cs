@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SeniorProject.Data;
 using SeniorProject.Models;
+using SeniorProject.ViewModels;
 
 namespace SeniorProject.Controllers
 {
@@ -33,7 +34,7 @@ namespace SeniorProject.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Auth(FacultyMembers member)
+        public ActionResult check(FacultyMembers member)
         {
             // checking if info match db
             var currentMember = applicationDbContext.FacultyMembers.FirstOrDefault(
@@ -48,7 +49,7 @@ namespace SeniorProject.Controllers
                 if (currentMember.Role == "admin")
                 {
                     
-                    return View();
+                    return RedirectToAction("AdminList");
 
                 }
                 else
@@ -60,5 +61,28 @@ namespace SeniorProject.Controllers
             { TempData["Message"] = "Wrong Password or id"; }
             return RedirectToAction("Index");
         }
+
+        // making a list for the adminstrator
+
+        [HttpGet]
+        public IActionResult AdminList()
+        {
+            var FacultyMembers = applicationDbContext.FacultyMembers.ToList();
+
+            var viewModel = new FacultyMembersListViewModel
+            {
+                FacultyMembers = FacultyMembers.Select(a => new FacultyMembersListViewModel.FacultyMembersItem
+                {
+                    AcademicID = a.AcademicID,
+                    Name = a.Name,
+                    Role = a.Role
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
+
+
     }
 }

@@ -1,7 +1,11 @@
-﻿<form class="row g-3">
+﻿
+<h1 class="card-title">Course name</h1>
+<hr />
+<hr />
+<form class="row g-3">
     <div class="col-md-12">
         <label for="inputEmail4" class="form-label">CLO</label>
-        <input type="email" class="form-control" id="inputEmail4">
+        <input type="text" class="form-control" id="inputEmail4" placeholder="Enter CLO text here..">
     </div>
     <div class="col-md-3">
         <label for="inputState" class="form-label">LOD (Learning outcome domain)</label>
@@ -16,44 +20,150 @@
             <option selected>Choose...</option>
             <option>...</option>
         </select>
-        </div><div class="col-md-3">
-        <label for="inputState" class="form-label">Assesing SO</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
-        </div>
-    <div class="col-12">
-        <label for="inputAddress" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
     </div>
-    <div class="col-12">
-        <label for="inputAddress2" class="form-label">Address 2</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="col-md-6">
-        <label for="inputCity" class="form-label">City</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="col-md-4">
-        <label for="inputState" class="form-label">State</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
-    </div>
-    <div class="col-md-2">
-        <label for="inputZip" class="form-label">Zip</label>
-        <input type="text" class="form-control" id="inputZip">
-    </div>
-    <div class="col-12">
+    <div class="col-6">
+    <label for="formassesing">Assesing So</label>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Check me out
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Yes
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+                No
             </label>
         </div>
     </div>
+    <hr />
+    <div class="col-md-6">
+        <label for="InClassActivites">In-Class Activites</label>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+                Lectures
+            </label>
+        </div>
+    <div name="InClassActivites" class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+                TutorialSessions
+        </label>
+    </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                LabSessions
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                ClassDiscussion
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                ClassExercises
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                MiscActiveLearning
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="OutClassActivites">Out-Class Activites</label>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+                Exercises
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                LectureSummary
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                SelfreadingResearch
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                DesignProblems
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                CaseStudy
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                TechnicalWriting
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Teamwork
+            </label>
+        </div>
+        <div name="OutClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                GroupDiscussion
+            </label>
+        </div>
+    </div>
+    <label for="AssesTools">Assesment Tools (Choose in weeks):</label>
+    <div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">Quiz</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">Exam</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">ComprehensiveFinalExam</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">ProjectIndividual</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">GroupProject</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">HomeworkAssignments</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">GradedLabWork</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">LabExam</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">StudentWorkPortfolio</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">FormalPresentation</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div><div name="AssesTools" class="col-md-2">
+        <label for="inputCity" class="form-label">EssayWriting</label>
+        <input type="text" class="form-control" id="inputCity">
+    </div>
+    
+    
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Add</button>
     </div>

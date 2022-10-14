@@ -10,16 +10,18 @@ namespace SeniorProject.Controllers
         {
             return View();
         }
-
-
-
-
-
-
-        public IActionResult Privacy()
+        
+        public IActionResult Artic()
         {
-            return View();
+            return View("Views/ArticulationMatrix/Index.cshtml");
         }
+
+
+
+
+
+
+       
 
     }
 }

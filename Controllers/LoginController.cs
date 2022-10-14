@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SeniorProject.Data;
 using SeniorProject.Models;
 using SeniorProject.ViewModels;
+using System.Linq;
 
 namespace SeniorProject.Controllers
 {
@@ -30,7 +31,7 @@ namespace SeniorProject.Controllers
         }
         
         
-
+        //----------------------------------
         
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -62,6 +63,8 @@ namespace SeniorProject.Controllers
             return RedirectToAction("Index");
         }
 
+
+
         // making a list for the adminstrator
 
         [HttpGet]
@@ -73,6 +76,7 @@ namespace SeniorProject.Controllers
             {
                 FacultyMembers = FacultyMembers.Select(a => new FacultyMembersListViewModel.FacultyMembersItem
                 {
+                    Id = a.Id,
                     AcademicID = a.AcademicID,
                     Name = a.Name,
                     Role = a.Role
@@ -81,7 +85,78 @@ namespace SeniorProject.Controllers
 
             return View(viewModel);
         }
+        //----------------------------------
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var facultyMembers = applicationDbContext.FacultyMembers
+                .FirstOrDefault(a => a.Id == id);
+
+            var viewModel = new FacultyMembersEditViewModel
+            {
+                Id = facultyMembers.Id,
+                AcademicID = facultyMembers.AcademicID,
+                Role = facultyMembers.Role,
+                Password = facultyMembers.Password,
+                Name = facultyMembers.Name
+            };
+
+            return View(viewModel);
+        }
+        //-----------------------------------
+
+        [HttpPost]
+        public IActionResult EditPost(FacultyMembersEditViewModel viewModel)
+        {
+            
+
+            var facultyMembers = new FacultyMembers
+            {
+                Id = viewModel.Id,
+                AcademicID = viewModel.AcademicID,
+                Role = viewModel.Role,
+                Password = viewModel.Password,
+                Name = viewModel.Name
+            };
+
+            applicationDbContext.FacultyMembers.Update(facultyMembers);
+            applicationDbContext.SaveChanges();
+
+            return RedirectToAction("AdminList");
+        }
+        //---------------------------
+
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var facultyMembers = applicationDbContext.FacultyMembers
+                .FirstOrDefault(a => a.Id == id);
+
+            var viewModel = new FacultyMembersDeleteViewModel
+            {
+                Id = facultyMembers.Id,
+                AcademicID = facultyMembers.AcademicID,
+                Role = facultyMembers.Role,
+                Password = facultyMembers.Password,
+                Name = facultyMembers.Name
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeletePost(int id)
+        {
+            var facultyMembers = applicationDbContext.FacultyMembers
+                .FirstOrDefault(a => a.Id == id);
+
+            applicationDbContext.FacultyMembers.Remove(facultyMembers);
+            applicationDbContext.SaveChanges();
+
+            return RedirectToAction("AdminList");
+        }
 
 
     }

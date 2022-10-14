@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SeniorProject.Data;
 using SeniorProject.Models;
 using SeniorProject.ViewModels;
-using System.Linq;
 
 namespace SeniorProject.Controllers
 {
@@ -29,10 +28,10 @@ namespace SeniorProject.Controllers
         {
             return View();
         }
-        
-        
-        //----------------------------------
-        
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult check(FacultyMembers member)
@@ -49,7 +48,7 @@ namespace SeniorProject.Controllers
             {
                 if (currentMember.Role == "admin")
                 {
-                    
+
                     return RedirectToAction("AdminList");
 
                 }
@@ -58,12 +57,11 @@ namespace SeniorProject.Controllers
                     ViewData["thisdata"] = currentMember;
                     return View("/Views/Home/Index.cshtml");
                 }
-            }else
+            }
+            else
             { TempData["Message"] = "Wrong Password or id"; }
             return RedirectToAction("Index");
         }
-
-
 
         // making a list for the adminstrator
 
@@ -76,7 +74,6 @@ namespace SeniorProject.Controllers
             {
                 FacultyMembers = FacultyMembers.Select(a => new FacultyMembersListViewModel.FacultyMembersItem
                 {
-                    Id = a.Id,
                     AcademicID = a.AcademicID,
                     Name = a.Name,
                     Role = a.Role
@@ -85,79 +82,37 @@ namespace SeniorProject.Controllers
 
             return View(viewModel);
         }
-        //----------------------------------
 
+
+
+        //Create a new user(faculty member) to the system from adminstration page
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Create()
         {
-            var facultyMembers = applicationDbContext.FacultyMembers
-                .FirstOrDefault(a => a.Id == id);
-
-            var viewModel = new FacultyMembersEditViewModel
-            {
-                Id = facultyMembers.Id,
-                AcademicID = facultyMembers.AcademicID,
-                Role = facultyMembers.Role,
-                Password = facultyMembers.Password,
-                Name = facultyMembers.Name
-            };
-
-            return View(viewModel);
+            return View();
         }
-        //-----------------------------------
 
         [HttpPost]
-        public IActionResult EditPost(FacultyMembersEditViewModel viewModel)
+        public IActionResult CreatePost(FacultyMembers viewModel)
         {
-            
-
-            var facultyMembers = new FacultyMembers
+            if (!ModelState.IsValid)
             {
-                Id = viewModel.Id,
+                return View(viewModel);
+            }
+
+            var member = new FacultyMembers
+            {
                 AcademicID = viewModel.AcademicID,
-                Role = viewModel.Role,
+                Name = viewModel.Name,
                 Password = viewModel.Password,
-                Name = viewModel.Name
+                Role = viewModel.Role,
+                
             };
 
-            applicationDbContext.FacultyMembers.Update(facultyMembers);
+            applicationDbContext.FacultyMembers.Add(member);
             applicationDbContext.SaveChanges();
 
             return RedirectToAction("AdminList");
         }
-        //---------------------------
-
-
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            var facultyMembers = applicationDbContext.FacultyMembers
-                .FirstOrDefault(a => a.Id == id);
-
-            var viewModel = new FacultyMembersDeleteViewModel
-            {
-                Id = facultyMembers.Id,
-                AcademicID = facultyMembers.AcademicID,
-                Role = facultyMembers.Role,
-                Password = facultyMembers.Password,
-                Name = facultyMembers.Name
-            };
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public IActionResult DeletePost(int id)
-        {
-            var facultyMembers = applicationDbContext.FacultyMembers
-                .FirstOrDefault(a => a.Id == id);
-
-            applicationDbContext.FacultyMembers.Remove(facultyMembers);
-            applicationDbContext.SaveChanges();
-
-            return RedirectToAction("AdminList");
-        }
-
-
     }
 }

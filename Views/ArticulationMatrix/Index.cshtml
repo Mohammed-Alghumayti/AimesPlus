@@ -16,10 +16,12 @@
     </div>
     <div class="col-md-3">
         <label for="inputState" class="form-label">SO (Student Outcome)</label>
+        <div class="col-md-11">
         <select id="inputState" class="form-select">
             <option selected>Choose...</option>
             <option>...</option>
         </select>
+        </div>
     </div>
     <div class="col-6">
     <label for="formassesing">Assesing So</label>
@@ -37,46 +39,128 @@
         </div>
     </div>
     <hr />
-    <div class="col-md-6">
-        <label for="InClassActivites">In-Class Activites</label>
-        <div name="InClassActivites" class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-            <label class="form-check-label" for="flexCheckChecked">
-                Lectures
+
+
+    <div class="col-md-3">
+        <label for="AssessmentTools">Assessment Tools (Choose in Weeks)</label>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:35px;">
+            <input class="form-check-input" type="checkbox" value="" id="check1" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Quiz
             </label>
+            
         </div>
-    <div name="InClassActivites" class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-                TutorialSessions
-        </label>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:54px;">
+            <input class="form-check-input" type="checkbox" value="" id="check2" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Exam
+            </label>
+            
+            
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:71px;">
+            <input class="form-check-input" type="checkbox" value="" id="check3" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Comprehensive Final Exam
+            </label>
+            
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:87px;">
+            <input class="form-check-input" type="checkbox" value="" id="check4" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Individual Project
+            </label>
+            
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:107px;">
+            <input class="form-check-input" type="checkbox" value="" id="check5" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Group Project
+            </label>
+            
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:127px;">
+            <input class="form-check-input" type="checkbox" value="" id="check6" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Homework Assignments
+            </label>
+           
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:147px;">
+            <input class="form-check-input" type="checkbox" value="" id="check7" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Graded Lab Work
+            </label>
+           
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:167px;">
+            <input class="form-check-input" type="checkbox" value="" id="check8" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Lab Exam
+            </label>
+           
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:187px;">
+            <input class="form-check-input" type="checkbox" value="" id="check9" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Student Work Portfolio
+            </label>
+           
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top:207px;">
+            <input class="form-check-input" type="checkbox" value="" id="check10" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Formal Presentation
+            </label>
+            
+        </div>
+        <div name="AssessmentTools" class="form-check" style="position:relative;top: 227px;">
+            <input class="form-check-input" type="checkbox" value="" id="check11" onclick="change()">
+            <label class="form-check-label" for="flexCheckDefault">
+                Essay Writing
+            </label>
+           
+        </div>
     </div>
-        <div name="InClassActivites" class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                LabSessions
-            </label>
+
+    <div class="col-md-3">
+        <div name="AssessmentToolsWeeks1" class="form-check" style="position:relative;top:10px;right:24px">
+            <p>&nbsp;</p>
+            <input type="text" class="form-control" id="text1" disabled>
         </div>
-        <div name="InClassActivites" class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                ClassDiscussion
-            </label>
+        <div name="AssessmentToolsWeeks2" class="form-check" style="position:relative;top:15px;right:24px">
+            <input type="text" class="form-control" id="text2" disabled>
         </div>
-        <div name="InClassActivites" class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                ClassExercises
-            </label>
+        <div name="AssessmentToolsWeeks3" class="form-check" style="position:relative;top:20px;right:24px">
+            <input type="text" class="form-control" id="text3" disabled>
         </div>
-        <div name="InClassActivites" class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                MiscActiveLearning
-            </label>
+        <div name="AssessmentToolsWeeks4" class="form-check" style="position:relative;top:25px;right:24px">
+            <input type="text" class="form-control" id="text4" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks5" class="form-check" style="position:relative;top:30px;right:24px">
+            <input type="text" class="form-control" id="text5" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks6" class="form-check" style="position:relative;top:35px;right:24px">
+            <input type="text" class="form-control" id="text6" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks7" class="form-check" style="position:relative;top:40px;right:24px">
+            <input type="text" class="form-control" id="text7" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks8" class="form-check" style="position:relative;top:45px;right:24px">
+            <input type="text" class="form-control" id="text8" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks9" class="form-check" style="position:relative;top:50px;right:24px">
+            <input type="text" class="form-control" id="text9" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks10" class="form-check" style="position:relative;top:55px;right:24px">
+            <input type="text" class="form-control" id="text10" disabled>
+        </div>
+        <div name="AssessmentToolsWeeks11" class="form-check" style="position:relative;top:60px;right:24px">
+            <input type="text" class="form-control" id="text11" disabled>
         </div>
     </div>
-    <div class="col-md-6">
+
+    <div class="col-md-3">
         <label for="OutClassActivites">Out-Class Activites</label>
         <div name="OutClassActivites" class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
@@ -127,44 +211,71 @@
             </label>
         </div>
     </div>
-    <label for="AssesTools">Assesment Tools (Choose in weeks):</label>
-    <div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">Quiz</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">Exam</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">ComprehensiveFinalExam</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">ProjectIndividual</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">GroupProject</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">HomeworkAssignments</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">GradedLabWork</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">LabExam</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">StudentWorkPortfolio</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">FormalPresentation</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div><div name="AssesTools" class="col-md-2">
-        <label for="inputCity" class="form-label">EssayWriting</label>
-        <input type="text" class="form-control" id="inputCity">
+
+    <div class="col-md-3">
+        <label for="InClassActivites">In-Class Activites</label>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+                Lectures
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                TutorialSessions
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                LabSessions
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                ClassDiscussion
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                ClassExercises
+            </label>
+        </div>
+        <div name="InClassActivites" class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                MiscActiveLearning
+            </label>
+        </div>
     </div>
     
-    
-    <div class="col-12">
+    <div class="col-12" style="text-align:right;">
+        <p>&nbsp;</p>
         <button type="submit" class="btn btn-primary">Add</button>
     </div>
 </form>
+
+@section scripts{
+    <script type="text/javascript">
+        
+        function change() {
+
+           for (var i = 1; i < 12; i++) {
+                const check = document.getElementById("check".concat(i));
+            const box = document.getElementById("text".concat(i));
+            
+
+            if (check.checked) {
+                box.disabled = false;
+            } else {
+            box.disabled = true;
+            }
+
+          //  }
+        }
+        }
+    </script>
+}

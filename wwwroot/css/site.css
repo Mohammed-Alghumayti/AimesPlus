@@ -1,5 +1,5 @@
 html {
-    background-image: url('/content/images/dashboard_login.jpg');
+    
     font-size: 14px;
 }
 
@@ -14,9 +14,5 @@ html {
   min-height: 100%;
 }
 
-body {
-    background-image: url('/content/images/dashboard_login.jpg');
-    margin-bottom: 60px;
-}
-  
+
 

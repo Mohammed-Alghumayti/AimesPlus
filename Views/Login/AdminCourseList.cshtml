@@ -1,0 +1,51 @@
+﻿@model SeniorProject.ViewModels.CourseListViewModel
+
+
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="AddCourse" class="btn btn-outline-primary">Add Course</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Course Title
+            </th>
+            <th>
+                Course Code
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>     
+     @{ 
+            try{
+            
+                foreach (var item in Model.courses)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.course_Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.course_Code)
+                        </td>                     
+                        
+                        <td>
+                            @Html.ActionLink("Edit", "EditCourse", new { id = item.course_Id }) |
+                            @Html.ActionLink("Delete", "DeleteCourse", new {  id = item.course_Id })
+                        </td>
+
+                    </tr>
+                }
+            }
+            catch (Exception)
+            {
+                <h1>error in the loop</h1>
+
+            }
+     }
+    </tbody>
+</table>

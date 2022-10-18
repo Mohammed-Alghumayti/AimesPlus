@@ -4,13 +4,10 @@
     ViewData["Title"] = "Admin";
 }
 
-<h1>Admin</h1>
+<h2>Faculty Member List</h2>
+<hr id="line" />
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Create new</a>
-
-</p>
-<table class="table">
+<table id="ta" class="table table-light table-hover">
     <thead>
         <tr>
             <th>
@@ -19,7 +16,6 @@
             <th>
                 Name
             </th>
-
             <th>
                 Role
             </th>
@@ -44,8 +40,8 @@
                             @Html.DisplayFor(m => item.Role)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new {  id = item.Id })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id } ,new {@class="btn btn-warning"}) |
+                            @Html.ActionLink("Delete", "Delete", new {  id = item.Id } ,new {@class="btn btn-danger"})
                         </td>
 
                     </tr>
@@ -58,4 +54,26 @@
             }
         }
     </tbody>
+
 </table>
+<p>
+    <a asp-action="Create" class="btn btn-primary col-md-2">Create new Member</a>
+
+</p>
+<style>
+    body {
+        background: rgb(157,217,190);
+        background: linear-gradient(180deg, rgba(157,217,190,1) 0%, rgba(130,186,161,1) 41%, rgba(51,140,100,1) 100%);
+    }
+
+    #ta {
+        margin-top: 50px;
+    }
+
+    #line {
+        width: 50%;
+        opacity: 50%;
+        color: #717970;
+        height: 2px;
+    }
+</style>

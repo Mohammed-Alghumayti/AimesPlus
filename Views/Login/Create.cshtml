@@ -1,51 +1,98 @@
-﻿
-@model SeniorProject.ViewModels.FacultyMembersCreateViewModel
+﻿@model SeniorProject.ViewModels.FacultyMembersCreateViewModel
 
 @{
     ViewData["Title"] = "View";
 }
 
-<h1>View</h1>
 
-<h4>FacultyMembers</h4>
-<hr />
+
+<h2 class="text-uppercase" id="add-head">Add Faculty Members</h2>
+
+<hr id="line" />
+<img id="logo1" class="position-absolute top-1 end-0" src="https://lh3.googleusercontent.com/kT1eengNaiMoZpa1fFVNBnhv--VPnr5oooZB8-m9WZHxjErjeDdouAvLZtAOSr4fAy-KDE8GInUfXSsIXENPP5Cja361e-Y8mbRnElZgg3hezxud9NmKsE4JtfwMIdxkOYIzR_WlG35hV0WmDY8xo0v5HewlDExXFNHEsZ_Xrt91TxM02KICl2icdXTTuFkiO07P_8q_ZOFPdpThAtNoNRjj8DI6nEfhV3O2ZuiUumOFlR9zMWdz3PotbOkufR43p1DXe7ZgfP3vT6i4lEfL2x55KclFh98QQlNR5SdwErlibmslZcThAUIdHubiZbfz0ctUIBM1xpUU1NBF3z3iS9NAlnPwqbLQ6fhEhWJT2RbKw0LSTMRzsMPrkxAuUeq0odc4rBKrvs8HQ-uQJTLtZJDLm3rW6qzI-x_isS5bOvWZrY0PlKI1vww8hHPZC6KDtm-qRhCWfOabLYVHpqnf2Yi35Tp0nXUwudHplOMFr77Hx2oXx6MfRpQC9hH8RX_JAgzzKf2aS_aIzzZhPjplkUvS_Q-cNKe7jXOINSAdeQIa2QMe8LJDwUyh-DVNC9_3tfXlMx9yfW8EaI8mWdhZZI6lueZ73Q5Ob-xNj-R6MlyWdMeEkSNXnl8PDvxiio7gvprtsM-EvfiWcWzLjh6UCbRPoD9wX4tWzgR8JCgoJOYzu-JE4EA44S07aL8Ww2q84rx8y9mdpHMSLMumeDhXW1jY1kz2oaLtX0GB1qYC2hNmXW2gnx8LhhY07BjV1MZzITeOh9b1-bZXRc6twXdaPpypMdob64BmKa5-ehe_487nfqeEUBGgrN8oYz4Lba7gKK1NrCWw2Wrasjn2F24rRnjvn_VE_UJJIAIjVVRaM9DqCG5pKu8gOg_-P8Su805olfjvkFvaM0cb6bdQ2RddgjauLkEVyPjdi7sFcwKVd7pm2dKI-Aff96_0cNKYZSNfBVQRZMU-q5U=s937-no?authuser=0" />
+
+
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Login" asp-action="CreatePost" method="post">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AcademicID" class="control-label"></label>
+                <label asp-for="AcademicID" class="control-label fw-bold"></label>
                 <input asp-for="AcademicID" class="form-control" />
                 <span asp-validation-for="AcademicID" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label fw-bold"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-label fw-bold"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
+                <label asp-for="Role" class="control-label fw-bold"></label>
+                <select asp-for="Role" class="form-select">
+                    <option value="Admin">Admin</option>
+                    <option value="Coordinator">Coordinator</option>
+                    <option value="Instructor">Instructor</option>
+                </select>
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-outline-primary col-md-12" />
             </div>
         </form>
     </div>
 </div>
+<br />
 
 <div>
-    <a asp-action="AdminList">Back to List</a>
+    <a class="btn btn-light" asp-action="AdminList">Back to List</a>
 </div>
 
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <style>
+        body {
+            background-image: url("https://lh3.googleusercontent.com/G8Dku0bgi-Kc2HCYvvbS4Y8XJiegM87LKCHZ3o7FCY8z_anjh6eHkm_4hnH41WWCYCFajxpwYk0jRM1K4bgJ9uk3hAK-ucs1D53b5mz_WniCREDnxUDYEVrW_w6AGvnPaoIB7hWFF6xtnp6uHJN7nU9mUe3WejXi9VlaeKBw9-0Ir_XudeErUu1MkXpT_QgQJ7QDQiiNz0pbPI_y-vXJYceeMcOKDCf7Xw151lOuEby7huY8wsaSy1R7DmI4SriKQZ-DTZ8VEO4G3udCiNwi3_CtjxsqjQ4XWtYHsW0Q6Ig4tF-DOuZLL-IBZQwrdUZsIkrkAtOfXjr8qaz9PMVDQqIVZFd_wIox_UIoVCCw2IMQ66JWrLvekGMjwOkIZ9DKGhjS_WXiBvevXEMZMV5X4qOt6EmDkjVLV2wzBdcxZbjlIOpsBVznDyuMa4GMkG6bR0XbHZKWy4hOiZgPXsTKBgP1p12t4NjqSxnaHSnV-4WY-uGOZN-W4Ilz20WlE34iJUI4iIlWc2-QcuYXVA2FCy_89hS_E081Sn1IOf-loMLBfwxTElFzkwe2Sel0whky6v1aVWB5vbnBPG8RbRGSr99MJnIL-16jG9pBVTQRs8fxBtOASuG5qf_NfJy7oD-AeOEGmW5oPaVYtE6DzfOl_bO_D8XbvGmzdRmCZqvLCo6otCIZ_Pk6vwRaPNQZ6P9r0Uk8hMmc3_F4ff4C8PyIE5bcY7a7J5kEKARlCJdBpzVMzGHtIoAOtPIxW2GMCijbhOH5SURGbRObZ5tHwr2gXSjqCTkbUvQCDpYGmsL-4ii1mi5VotPUao4Jo8MT1ehZrHFAAJkH7rT59waWCe4S0_10TutbZTEkYsGPSZ_FAc-AxHd_7nF93o41hMPZFaqO9icfn4GUgSxftyAq3wUUr98mbhfEHB2CXMWxt2S1rf5y5n7kuBNlqCqzxEzhLqNWktIVaVUbU-Y=w1280-h720-no?authuser=0");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .row {
+            margin-top: 40px;
+        }
+
+        #add-head {
+            text-align: center;
+            font-size: 40px;
+            color: papayawhip;
+        }
+
+        #line {
+            width: 50%;
+            margin: 0 25% 0 25%;
+            opacity: 50%;
+            color: #FBF2CF;
+            height: 3px;
+            border-radius: 70%;
+        }
+
+        #logo1 {
+            margin-top: -70px;
+            margin-right: 10px;
+            width: 120px;
+        }
+    </style>

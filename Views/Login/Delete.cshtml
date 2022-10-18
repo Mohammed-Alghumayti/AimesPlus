@@ -4,12 +4,12 @@
 <form asp-controller="Login" asp-action="DeletePost" method="post">
     <input hidden asp-for="Id" />
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label asp-for="AcademicID"></label>
             <input asp-for="AcademicID" class="form-control">
             <span asp-validation-for="AcademicID" class="text-danger"></span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label asp-for="Role"></label>
             <input asp-for="Role" class="form-control">
             <span asp-validation-for="Role" class="text-danger"></span>
@@ -31,5 +31,5 @@
     </div>
     <br />
 
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="submit" class="btn btn-outline-danger col-md-4">Delete</button>
 </form>

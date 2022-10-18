@@ -29,10 +29,10 @@ namespace SeniorProject.Controllers
         {
             return View();
         }
-        
-        
+
+
         //----------------------------------
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult check(FacultyMembers member)
@@ -49,8 +49,8 @@ namespace SeniorProject.Controllers
             {
                 if (currentMember.Role == "admin")
                 {
-                    
-                    return RedirectToAction("AdminList");
+
+                    return View("AdminHome");
 
                 }
                 else
@@ -58,7 +58,8 @@ namespace SeniorProject.Controllers
                     ViewData["thisdata"] = currentMember;
                     return View("/Views/Home/Index.cshtml");
                 }
-            }else
+            }
+            else
             { TempData["Message"] = "Wrong Password or id"; }
             return RedirectToAction("Index");
         }
@@ -86,11 +87,12 @@ namespace SeniorProject.Controllers
             return View(viewModel);
         }
 
-//=================================================================================
+        //=================================================================================
 
         //Create a new user(faculty member) to the system from adminstration page
+
         [HttpGet]
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -117,12 +119,12 @@ namespace SeniorProject.Controllers
 
             return RedirectToAction("AdminList");
         }
-    
-//=================================================================================
+
+        //=================================================================================
 
 
-    //------------Edit----------------------
-    [HttpGet]
+        //------------Edit----------------------
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var facultyMembers = applicationDbContext.FacultyMembers
@@ -144,7 +146,7 @@ namespace SeniorProject.Controllers
         [HttpPost]
         public IActionResult EditPost(FacultyMembersEditViewModel viewModel)
         {
-            
+
 
             var facultyMembers = new FacultyMembers
             {
@@ -161,7 +163,7 @@ namespace SeniorProject.Controllers
             return RedirectToAction("AdminList");
         }
 
-//=================================================================================
+        //=================================================================================
 
         //-----------Delete----------------
 
@@ -195,6 +197,125 @@ namespace SeniorProject.Controllers
             return RedirectToAction("AdminList");
         }
 
+
+        //================================Admin Course Related=================================================
+
+        // making a list for the Courses
+        [HttpGet]
+        public ActionResult AdminCourseList()
+        {
+     
+                var Courses = applicationDbContext.Courses.ToList();
+
+                var viewModel = new CourseListViewModel
+                {
+                    courses = Courses.Select(a => new CourseListViewModel.CourseItem
+                    {
+                        course_Id = a.course_Id,
+                        course_Title = a.course_Title,
+                        course_Code = a.course_Code
+                        
+                    }).ToList()
+                };
+
+                return View(viewModel);
+        }
+
+        //Create a new user(faculty member) to the system from adminstration page
+
+        [HttpGet]
+        public ActionResult AddCourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddCoursePost(Course viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var course = new Course
+            {
+                course_Id = viewModel.course_Id,
+                course_Title = viewModel.course_Title,
+                course_Code = viewModel.course_Code
+            };
+
+            applicationDbContext.Courses.Add(course);
+            applicationDbContext.SaveChanges();
+
+            return RedirectToAction("AdminCourseList");
+        }
+        //------------Edit----------------------
+        [HttpGet]
+        public IActionResult EditCourse(int id)
+        {
+            var Course = applicationDbContext.Courses
+                .FirstOrDefault(a => a.course_Id == id);
+
+            var viewModel = new CourseEditViewModel
+            {
+                Course_Id = Course.course_Id,
+                Course_Title = Course.course_Title,
+                Course_Code = Course.course_Code
+            };
+
+            return View(viewModel);
+        }
+        //-----------------------------------
+
+        [HttpPost]
+        public IActionResult EditCoursePost(CourseEditViewModel viewModel)
+        {
+
+
+            var Course = new Course
+            {
+                course_Id = viewModel.Course_Id,
+                course_Title = viewModel.Course_Title,
+                course_Code = viewModel.Course_Code
+            };
+
+            applicationDbContext.Courses.Update(Course);
+            applicationDbContext.SaveChanges();
+
+            return RedirectToAction("AdminCourseList");
+        }
+
+        //=================================================================================
+
+        [HttpGet]
+        public IActionResult DeleteCourse(int id)
+        {
+            var DelCourse = applicationDbContext.Courses
+                .FirstOrDefault(a => a.course_Id == id);
+
+            var viewModel = new CourseDeleteViewModel
+            {
+                Course_Id = DelCourse.course_Id,
+                Course_Title = DelCourse.course_Title,
+                Course_Code = DelCourse.course_Code
+                
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCoursePost(int id)
+        {
+            var Deletedcourse = applicationDbContext.Courses
+                .FirstOrDefault(a => a.course_Id == id);
+            
+
+            applicationDbContext.Courses.Remove(Deletedcourse);
+            applicationDbContext.SaveChanges();
+
+            return RedirectToAction("AdminCourseList");
+        }
 
     }
 }

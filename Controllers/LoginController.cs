@@ -47,7 +47,7 @@ namespace SeniorProject.Controllers
 
             if (currentMember != null)
             {
-                if (currentMember.Role == "admin")
+                if (currentMember.Role == "Admin")
                 {
 
                     return View("AdminHome");

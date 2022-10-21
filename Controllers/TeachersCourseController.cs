@@ -31,7 +31,7 @@ namespace SeniorProject.Controllers
             {
                 teachersCourses = teachersCourses.Select(t => new TeachersCourseListViewModel.TeachersCoursesItem
                 {
-                    
+                    teacherCourse_Id = t.teacherCourse_Id,
                     teacher_Ref =t.teacher_Ref,
                     course_Ref =t.course_Ref,
                     SemesterStart =t.SemesterStart,
@@ -114,46 +114,38 @@ namespace SeniorProject.Controllers
             return RedirectToAction("List");
         }
 
-        // GET: TeacherCourseController/Edit/5
-        public ActionResult Edit(int id)
+        //-------------------------------------------------
+
+        [HttpGet]
+        public IActionResult Delete1(int id)
         {
-            return View();
+            var teach = applicationDbContext.TeachersCourse
+                .Include(t => t.teacher_Ref)
+                .Include(c => c.course_Ref)
+                .FirstOrDefault(a => a.teacherCourse_Id == id);
+
+            var viewModel = new TeachersCourseDeleteViewModel
+            {
+                teacherCourse_Id = teach.teacherCourse_Id,
+                teacher_Ref = teach.teacher_Ref,
+                course_Ref = teach.course_Ref,
+                SemesterStart = teach.SemesterStart,
+                SemesterEnd = teach.SemesterEnd
+            };
+
+            return View(viewModel);
         }
 
-        // POST: TeacherCourseController/Edit/5
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult DeletePost(TeachersCourseDeleteViewModel t)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var teach = applicationDbContext.TeachersCourse.Find(t.teacherCourse_Id);
 
-        // GET: TeacherCourseController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            applicationDbContext.TeachersCourse.Remove(teach);
+            applicationDbContext.SaveChanges();
 
-        // POST: TeacherCourseController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("List");
         }
     }
 }

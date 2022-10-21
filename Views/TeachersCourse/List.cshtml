@@ -46,10 +46,14 @@
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.SemesterEnd)
+                        </td><td>
+                            @Html.DisplayFor(m => item.teacherCourse_Id)
                         </td>
                         <td>
-                            |
-                            @Html.ActionLink("Delete", "Delete", new {  id = item.teacherCourse_Id })
+                            
+                            
+                            @Html.ActionLink("Delete", "Delete1", new {  id = item.teacherCourse_Id },new {@class="btn btn-danger"})
+                            
                         </td>
 
                     </tr>

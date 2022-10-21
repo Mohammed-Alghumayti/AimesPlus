@@ -1,0 +1,38 @@
+﻿@model SeniorProject.ViewModels.TeachersCourseDeleteViewModel
+
+<form asp-controller="TeachersCourse" asp-action="DeletePost" method="post">
+    <input hidden asp-for="teacherCourse_Id" />
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="teacher_Ref.teacher_Name"></label>
+            <input asp-for="teacher_Ref.teacher_Name" class="form-control">
+            <span asp-validation-for="teacher_Ref.teacher_Name" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="course_Ref.course_Code"></label>
+            <input asp-for="course_Ref.course_Code" class="form-control">
+            <span asp-validation-for="course_Ref.course_Code" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="SemesterStart"></label>
+            <input asp-for="SemesterStart" class="form-control">
+            <span asp-validation-for="SemesterStart" class="text-danger"></span>
+        </div>
+
+    </div> 
+    
+    <div class="form-row">
+        <div id="ee" class="form-group col-md-4">
+            <label asp-for="SemesterEnd"></label>
+            <input asp-for="SemesterEnd" class="form-control">
+            <span asp-validation-for="SemesterEnd" class="text-danger"></span>
+        </div>
+    </div>
+    
+    
+    <br />
+
+    <button type="submit" class="btn btn-outline-danger col-md-4">Delete</button>
+</form>

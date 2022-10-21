@@ -1,0 +1,55 @@
+﻿@model SeniorProject.ViewModels.TeachersCourseCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>TeachersCourse</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePost" asp-controller="TeachersCourse" method="post">
+            
+            <div class="form-group">
+                <label asp-for="teacher_Ref"></label>
+                <select asp-items="Model.TeachersList" asp-for="teacher_Ref" class="form-control">
+                    <option value="">--Select--</option>
+                </select>
+                <span asp-validation-for="teacher_Ref" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+        <label asp-for="course_Ref"></label>
+        <select asp-items="Model.CoursesList" asp-for="course_Ref" class="form-control">
+            <option value="">--Select--</option>
+        </select>
+        <span asp-validation-for="course_Ref" class="text-danger"></span>
+    </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SemesterStart" class="control-label"></label>
+                <input asp-for="SemesterStart" class="form-control" />
+                <span asp-validation-for="SemesterStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SemesterEnd" class="control-label"></label>
+                <input asp-for="SemesterEnd" class="form-control" />
+                <span asp-validation-for="SemesterEnd" class="text-danger"></span>
+            </div>
+    <br />
+            <div class="form-group">
+                <input type="submit" value="Assign" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

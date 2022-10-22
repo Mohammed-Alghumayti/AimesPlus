@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using SeniorProject.Data;
 using SeniorProject.Models;
 using SeniorProject.ViewModels;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace SeniorProject.Controllers
 {
@@ -47,7 +49,7 @@ namespace SeniorProject.Controllers
 
             if (currentMember != null)
             {
-                if (currentMember.Role == "Admin")
+                if (currentMember.Role == "admin")
                 {
 
                     return View("AdminHome");
@@ -55,12 +57,13 @@ namespace SeniorProject.Controllers
                 }
                 else
                 {
-                    ViewData["thisdata"] = currentMember;
-                    return View("/Views/Home/Index.cshtml");
+
+                    TempData["name"] = currentMember.Name;
+                    return RedirectToAction("Index", "Home", currentMember);
                 }
             }
             else
-            { TempData["Message"] = "Wrong Password or id"; }
+            { TempData["Message"] = "Wrong Password or id";  }
             return RedirectToAction("Index");
         }
 
@@ -113,8 +116,17 @@ namespace SeniorProject.Controllers
                 Role = viewModel.Role,
 
             };
+            if(viewModel.Role.Equals("Instructor")|| viewModel.Role.Equals("Coordinator")) { 
+            var teacher = new Teachers
+            {               
+                teacher_Name = viewModel.Name,
+                AcademicId = viewModel.AcademicID
+            };
 
+            applicationDbContext.Teachers.Add(teacher);
+                }
             applicationDbContext.FacultyMembers.Add(member);
+            
             applicationDbContext.SaveChanges();
 
             return RedirectToAction("AdminList");
@@ -305,13 +317,15 @@ namespace SeniorProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteCoursePost(int id)
+        public IActionResult DeleteCoursePost(int id, IFormCollection collection)
         {
-            var Deletedcourse = applicationDbContext.Courses
-                .FirstOrDefault(a => a.course_Id == id);
-            
+           
+         var x = Convert.ToInt64(collection["x"]);
 
-            applicationDbContext.Courses.Remove(Deletedcourse);
+            var course = applicationDbContext.Courses
+                .FirstOrDefault(a => a.course_Id == x);
+           
+            applicationDbContext.Courses.Remove(course);
             applicationDbContext.SaveChanges();
 
             return RedirectToAction("AdminCourseList");

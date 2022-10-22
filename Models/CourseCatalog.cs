@@ -6,6 +6,7 @@ namespace SeniorProject.Models
     {
         public int Id { get; set; }
         public Course course_Ref { get; set; }
+        public int WeekNo { get; set; }
         public string catalog_topic { get; set; }    
         public string details { get; set; }
     }

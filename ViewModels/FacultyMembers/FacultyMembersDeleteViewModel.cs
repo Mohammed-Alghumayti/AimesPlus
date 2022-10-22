@@ -8,7 +8,6 @@ namespace SeniorProject.ViewModels
         public int Id { get; set; }
 
         [Required]
-
         public int AcademicID { get; set; }
 
         [Display(Name = "Name")]

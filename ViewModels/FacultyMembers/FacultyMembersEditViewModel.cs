@@ -6,7 +6,7 @@ namespace SeniorProject.ViewModels
     public class FacultyMembersEditViewModel
     {
         public int Id { get; set; }
-        
+
         [Required]
         // min and max
         public int AcademicID { get; set; }
@@ -14,7 +14,7 @@ namespace SeniorProject.ViewModels
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-       
+
         [Display(Name = "Role")]
         public string Role { get; set; }
 

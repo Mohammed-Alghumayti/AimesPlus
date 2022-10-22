@@ -1,18 +1,52 @@
-﻿@using SeniorProject.Models;
+﻿@model SeniorProject.ViewModels.TeachersCourseListViewModel
+
 @{
     ViewData["Title"] = "Home Page";
-    var member = (FacultyMembers)ViewData["thisdata"];
+    
+    //to show faculty member name
+    var member = ViewData["thisdata"];
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome @member.Name</h1>
-    <p></p>
-    
+    <h1 class="display-4">Welcome @member </h1> 
 </div>
+<hr />
 
-<style type="text/css">
-    body {
-        background-image: url('content/Images/Dashboard_Login.jpg');
-        margin: 0;
+    <h3>Your Courses</h3>
+    
+    <br />
+@{
+    try
+    {
+        
+        foreach (var item in Model.teachersCourses)
+        {
+           
+    <div class="card text-white bg-secondary mb-4 mx-2" style="min-width: 18rem; display:inline-table;">
+                            <div class="card-header">@Html.DisplayFor(m => item.course_Ref.course_Code)</div>
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(m => item.course_Ref.course_Title)</h5>
+                                <p> &nbsp;</p>
+                                <div style="text-align:right;">
+
+                        
+                            <a asp-controller="Course" asp-action="Index" class="btn btn-primary">View Course</a>
+                            <br />
+        
+      
+                            </div>
+    </div>
+    </div>
+        }
+        
     }
-</style>
+    catch (Exception)
+    {
+    <h1>error</h1>
+
+    }
+            }
+
+        
+    
+    

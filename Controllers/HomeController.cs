@@ -8,7 +8,7 @@ namespace SeniorProject.Controllers
 {
     public class HomeController : Controller
     {
-        //database objext to use throughout this controller
+        //database object to use throughout this controller
         private readonly ApplicationDbContext applicationDbContext;
         public HomeController(ApplicationDbContext applicationDbContext)
         {

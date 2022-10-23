@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeniorProject.Data;
 
@@ -10,9 +11,10 @@ using SeniorProject.Data;
 namespace SeniorProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221023162504_six")]
+    partial class six
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -578,7 +580,7 @@ namespace SeniorProject.Migrations
             modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixActivities", b =>
                 {
                     b.HasOne("SeniorProject.Models.ArticulationMatrix", "ArticulationMatrix_Ref")
-                        .WithMany("Activities")
+                        .WithMany()
                         .HasForeignKey("ArticulationMatrix_RefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -597,7 +599,7 @@ namespace SeniorProject.Migrations
             modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixAssessmentTools", b =>
                 {
                     b.HasOne("SeniorProject.Models.ArticulationMatrix", "ArticulationMatrix_Ref")
-                        .WithMany("AssessmentTools")
+                        .WithMany()
                         .HasForeignKey("ArticulationMatrix_RefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -739,13 +741,6 @@ namespace SeniorProject.Migrations
                         .IsRequired();
 
                     b.Navigation("teacherCourse_Ref");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrix", b =>
-                {
-                    b.Navigation("Activities");
-
-                    b.Navigation("AssessmentTools");
                 });
 #pragma warning restore 612, 618
         }

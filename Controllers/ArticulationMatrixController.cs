@@ -25,20 +25,9 @@ namespace SeniorProject.Controllers
         {
             var Arti = applicationDbContext.ArticulationMatrix.ToList();
 
-            var viewModel = new ArticulationMatrixListViewModel
-            {
-                ArticulationMatrix = Arti.Select(a => new ArticulationMatrixListViewModel.ArticulationMatrixItim
-                {
-                    Id = a.Id,
-                    teacherCourse_Ref = a.teacherCourse_Ref,
-                    CLO = a.CLO,
-                    LOD_Ref = a.LOD_Ref,
-                    SO = a.SO,
-                    Assessing_SO = a.Assessing_SO
-                }).ToList()
-            };
+            
 
-            return View(viewModel);
+            return View();
         }
     }
 }

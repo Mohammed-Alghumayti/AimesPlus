@@ -6,7 +6,7 @@ namespace SeniorProject.Models
     {
         [Key]
         public int course_Id { get; set; }
-        public string course_Title { get; set; }
+        public string course_Title { get; set; }       
         public string course_Code { get; set; }
        
     }

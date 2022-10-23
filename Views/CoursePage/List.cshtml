@@ -1,0 +1,180 @@
+﻿@model SeniorProject.ViewModels.CoursePageListViewModel
+
+@{
+    var coursename = ViewData["CourseName"];
+   
+}
+<h1>Course Page </h1>
+<h2>@coursename</h2>
+
+<section>Course Topics
+
+    <table id="ta" class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Week No.
+                </th>
+                <th>
+                    Topic
+                </th>
+                <th>
+                    Topic Details
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                try
+                {
+                    foreach (var item in Model.catalog)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.WeekNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.catalog_topic)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.details)
+                            </td>
+                            
+
+                        </tr>
+                    }
+                }
+                catch (Exception)
+                {
+                    <h1>error</h1>
+
+                }
+            }
+        </tbody>
+
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+<section>Course Articulation Matrix
+
+
+    <table id="tb" class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Clo
+                </th>
+                <th>
+                    LOD
+                </th>
+                <th>
+                    SO
+                </th>
+                
+                <th>
+                    Assesing SO
+                </th>
+                <th>
+                    In-Class Activites
+                </th>
+                <th>
+                    Out-Class Activites
+                </th>
+                <th>
+                    Assessment Tools
+                </th>
+                
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                try
+                {
+                    foreach (var item in Model.Articulation)
+                    {
+                        var i = 0;
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.CLO)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.LOD_Ref.LOD_Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.SO)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.Assessing_SO)
+                            </td>
+                            @{
+                                //Must do double loop incase of more than 1 choice of the list
+
+                                if (item.Activities[i].activity_Ref.activity_Type.Equals( "In-Class")){
+                             <td>
+                                @Html.DisplayFor(m => item.Activities[i].activity_Ref.Name)
+                            </td>
+                                }else{
+
+                                    <td>
+                                       -
+                                    </td>
+                                }                            
+                            }
+                            @{
+                            if (item.Activities[i].activity_Ref.activity_Type.Equals("Out-Class"))
+                            {
+                            <td>
+                                @Html.DisplayFor(m => item.Activities[i].activity_Ref.Name)
+                            </td>
+                            }
+                            else
+                            {
+
+                            <td>
+                                -
+                            </td>
+                            }
+                            }
+                            
+                            <td>
+                                @Html.DisplayFor(m => item.AssessmentTools[i].WeekNo)
+                            </td>
+
+                        </tr>
+                        i++;
+                    }
+                }
+                catch (Exception)
+                {
+                    <h1>error</h1>
+
+                }
+            }
+        </tbody>
+
+    </table>
+
+
+
+</section>
+<section>Grade dist</section>

@@ -70,45 +70,49 @@ namespace SeniorProject.Controllers
 
                 }).ToList()
 
-
-
-
-
             };
-
-
-
-
-            
-
-
-
 
             ViewData["CourseName"] = coursecode;
             return View(viewModel);
         }
 
-        
+
 
         // GET: Course/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult AddTopic(string Course)
         {
-            return View();
+            var course = applicationDbContext.Courses.FirstOrDefault(a => a.course_Code == Course);
+            ViewData["CourseObj"] = course;
+            return View("AddTopic");
         }
 
         // POST: Course/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult AddTopicPost(CourseCatalog viewModel, IFormCollection collection)
         {
-            try
+
+            var id = Convert.ToInt64(collection["courseID"]);
+            var course = applicationDbContext.Courses.FirstOrDefault(a => a.course_Id == id);
+
+            
+
+            var CourseTopic = new CourseCatalog
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                
+                course_Ref = course,
+                WeekNo = viewModel.WeekNo,
+                catalog_topic = viewModel.catalog_topic,
+                details = viewModel.details
+
+            };
+
+            applicationDbContext.CourseCatalog.Add(CourseTopic);
+            applicationDbContext.SaveChanges();
+
+                return RedirectToAction("List");
+            
         }
 
         // GET: Course/Edit/5
@@ -133,7 +137,8 @@ namespace SeniorProject.Controllers
         }
 
         // GET: Course/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public ActionResult DeleteTopic(int id)
         {
             return View();
         }
@@ -141,16 +146,28 @@ namespace SeniorProject.Controllers
         // POST: Course/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteTopicPost(IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var id = Convert.ToInt64(collection["Item.Id"]);
+
+                //get the selected Course topic from db
+                var Ctopic = applicationDbContext.CourseCatalog.FirstOrDefault(a => a.Id == id);
+
+
+                // delete the selected CourseCatalog
+                applicationDbContext.CourseCatalog.Remove(Ctopic);
+                applicationDbContext.SaveChanges();
+                return RedirectToAction("List");
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                return RedirectToAction("List");
+                
             }
+            
+
         }
     }
 }

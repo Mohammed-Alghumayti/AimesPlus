@@ -4,10 +4,10 @@
     var coursename = ViewData["CourseName"];
    
 }
-<h1>Course Page </h1>
-<h2>@coursename</h2>
+<h1 class="display-1 pb-5 mb-4" style="font: bold;">@coursename </h1>
 
-<section>Course Topics
+
+<section class="mb-5"> <h4 class="display-5">Course Topics</h4>
 
     <table id="ta" class="table table-light table-hover">
         <thead>
@@ -30,47 +30,45 @@
                 {
                     foreach (var item in Model.catalog)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.WeekNo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.catalog_topic)
-                            </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(m => item.WeekNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.catalog_topic)
+                                    </td>
 
-                            <td>
-                                @Html.DisplayFor(m => item.details)
-                            </td>
-                            
+                                    <td>
+                                        @Html.DisplayFor(m => item.details)
+                                    </td>
+                                    
+                                    <td><form asp-action="DeleteTopicPost" asp-controller="CoursePage" method="post">
+                                    <input  asp-for="@item.Id" value="@item.Id" type="hidden"/>
+                                    <button class="btn btn-outline-danger" class type="submit" value="@item.Id">Delete</button>
+                               
 
-                        </tr>
+                                            </form>
+                                    </td>
+                                </tr>
                     }
                 }
                 catch (Exception)
                 {
-                    <h1>error</h1>
+                            <h1>error</h1>
 
                 }
             }
         </tbody>
 
     </table>
-
-
-
-
-
-
-
-
-
-
-
-
+    
+        <a asp-action="AddTopic"  type="button" class="btn btn-outline-success" asp-route-Course="@coursename">New Topic</a>
 
 </section>
 
-<section>Course Articulation Matrix
+<section>
+    <h4 class="display-5">
+        Articulation Matrix</h1>
 
 
     <table id="tb" class="table table-light table-hover">
@@ -111,62 +109,62 @@
                     foreach (var item in Model.Articulation)
                     {
                         var i = 0;
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.CLO)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.LOD_Ref.LOD_Name)
-                            </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(m => item.CLO)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.LOD_Ref.LOD_Name)
+                                    </td>
 
-                            <td>
-                                @Html.DisplayFor(m => item.SO)
-                            </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.SO)
+                                    </td>
 
-                            <td>
-                                @Html.DisplayFor(m => item.Assessing_SO)
-                            </td>
-                            @{
+                                    <td>
+                                        @Html.DisplayFor(m => item.Assessing_SO)
+                                    </td>
+                                    @{
                                 //Must do double loop incase of more than 1 choice of the list
 
                                 if (item.Activities[i].activity_Ref.activity_Type.Equals( "In-Class")){
-                             <td>
-                                @Html.DisplayFor(m => item.Activities[i].activity_Ref.Name)
-                            </td>
+                                             <td>
+                                                @Html.DisplayFor(m => item.Activities[i].activity_Ref.Name)
+                                            </td>
                                 }else{
 
-                                    <td>
-                                       -
-                                    </td>
+                                                    <td>
+                                                       -
+                                                    </td>
                                 }                            
-                            }
-                            @{
+                                    }
+                                    @{
                             if (item.Activities[i].activity_Ref.activity_Type.Equals("Out-Class"))
                             {
-                            <td>
-                                @Html.DisplayFor(m => item.Activities[i].activity_Ref.Name)
-                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => item.Activities[i].activity_Ref.Name)
+                                            </td>
                             }
                             else
                             {
 
-                            <td>
-                                -
-                            </td>
+                                            <td>
+                                                -
+                                            </td>
                             }
-                            }
-                            
-                            <td>
-                                @Html.DisplayFor(m => item.AssessmentTools[i].WeekNo)
-                            </td>
+                                    }
+                                    
+                                    <td>
+                                        @Html.DisplayFor(m => item.AssessmentTools[i].WeekNo)
+                                    </td>
 
-                        </tr>
+                                </tr>
                         i++;
                     }
                 }
                 catch (Exception)
                 {
-                    <h1>error</h1>
+                            <h1>error</h1>
 
                 }
             }

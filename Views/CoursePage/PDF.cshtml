@@ -1,0 +1,526 @@
+﻿@{
+    Layout = "";
+}
+<html>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+
+
+</head>
+
+<body class="c13 doc-content">
+
+    <button class="btn btn-outline-success"
+            id="pdfButton">
+        <b>Click here to Generate PDF</b>
+    </button>
+
+
+    <div id="generatePDF" hidden>
+
+        <img id="logo" src="https://i.imgur.com/JNgVMaS.jpg">
+        <img id="abet" src="https://cces.psau.edu.sa/sitesuploads/cces/node/7442/1537347334.jpg">
+        <br>
+        <br>
+        <br>
+
+        <p class="c3"><span class="c23">MID Exam &ndash; @Context.Session.GetString(Helper.Semester)</span></p>
+        <p class="c20"><span class="c0"> @Context.Session.GetString(Helper.course_CODE) - @Context.Session.GetString(Helper.course_NAME) </span></p>
+        <p class="c18"><span class="c0">@Context.Session.GetString(Helper.ROLE): @Context.Session.GetString(Helper.UserName) </span></p>
+        <p class="c18 c25"><span class="c0"></span></p>
+        <p class="c25 c26"><span class="c0"></span></p><a id="t.032b1eceeb0d8b7bfe3be3f129dae66cdfb1362b"></a><a id="t.0"></a>
+        <table class="c11">
+            <tr class="c6">
+                <td class="c19" colspan="1" rowspan="1">
+                    <p class="c12"><span class="c1">Student ID</span></p>
+                </td>
+                <td class="c7" colspan="1" rowspan="1">
+                    <p class="c2"><span class="c1"></span></p>
+                </td>
+            </tr>
+            <tr class="c24">
+                <td class="c19" colspan="1" rowspan="1">
+                    <p class="c12"><span class="c1">Student Name</span></p>
+                </td>
+                <td class="c7" colspan="1" rowspan="1">
+                    <p class="c2"><span class="c1"></span></p>
+                </td>
+            </tr>
+            <tr class="c15">
+                <td class="c19" colspan="1" rowspan="1">
+                    <p class="c12"><span class="c1">Section</span></p>
+                </td>
+                <td class="c7" colspan="1" rowspan="1">
+                    <p class="c2"><span class="c1"></span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c2"><span class="c14"></span></p>
+        <p class="c2"><span class="c14"></span></p>
+        <p class="c9">
+            <span class="c1">
+                Obtained Marks &nbsp; [ &nbsp; &nbsp; &nbsp; &nbsp; ] &nbsp; &nbsp;out of &nbsp; [
+                &nbsp; &nbsp; &nbsp; &nbsp; ]
+            </span>
+        </p>
+        <p class="c17"><span class="c1"></span></p>
+        <p class="c22"><span class="c28">&nbsp; &nbsp; </span><span class="c1">Duration - Minute(s)</span></p>
+        <p class="c22 c25"><span class="c29"></span></p><a id="t.38ea96ee03aca09453210b9e79b73b3c48733f56"></a><a id="t.1"></a>
+        <table class="c10">
+            <tr class="c27">
+                <td class="c8" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c16">HVCLO </span></p>
+                </td>
+                <td class="c8" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c16">Max </span></p>
+                </td>
+                <td class="c4" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c16">Obtained Marks</span></p>
+                </td>
+            </tr>
+            <tr class="c21">
+                <td class="c8" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c1">- </span></p>
+                </td>
+                <td class="c8" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c1">-</span></p>
+                </td>
+                <td class="c4" colspan="1" rowspan="1">
+                    <p class="c2"><span class="c1"></span></p>
+                </td>
+            </tr>
+            <tr class="c5">
+                <td class="c8" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c1">- </span></p>
+                </td>
+                <td class="c8" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c1">-</span></p>
+                </td>
+                <td class="c4" colspan="1" rowspan="1">
+                    <p class="c2"><span class="c1"></span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c2"><span class="c14"></span></p>
+        <p class="c2"><span class="c14"></span></p>
+
+        <style type="text/css">
+
+            #logo {
+                height: 120px;
+                margin-left: 50px;
+            }
+
+            #abet {
+                height: 80px;
+                float: right;
+            }
+
+            ol {
+                margin: 0;
+                padding: 0
+            }
+
+            table td,
+            table th {
+                padding: 0
+            }
+
+            .c7 {
+                border-right-style: solid;
+                padding: 5pt 5pt 5pt 5pt;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: top;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 346.2pt;
+                border-top-color: #000000;
+                border-bottom-style: solid
+            }
+
+            .c4 {
+                border-right-style: solid;
+                padding: 5pt 5pt 5pt 5pt;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: top;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 112.6pt;
+                border-top-color: #000000;
+                border-bottom-style: solid
+            }
+
+            .c8 {
+                border-right-style: solid;
+                padding: 5pt 5pt 5pt 5pt;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: top;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 81pt;
+                border-top-color: #000000;
+                border-bottom-style: solid
+            }
+
+            .c19 {
+                border-right-style: solid;
+                padding: 5pt 5pt 5pt 5pt;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: top;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 121.3pt;
+                border-top-color: #000000;
+                border-bottom-style: solid
+            }
+
+            .c29 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 6pt;
+                font-family: "Arial";
+                font-style: normal
+            }
+
+            .c0 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 18pt;
+                font-family: "Times New Roman";
+                font-style: normal
+            }
+
+            .c1 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 16pt;
+                font-family: "Arial";
+                font-style: normal
+            }
+
+            .c14 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 11pt;
+                font-family: "Arial";
+                font-style: normal
+            }
+
+            .c23 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 22pt;
+                font-family: "Arial";
+                font-style: normal
+            }
+
+            .c16 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 14pt;
+                font-family: "Arial";
+                font-style: normal
+            }
+
+            .c17 {
+                margin-left: 145.3pt;
+                padding-top: 37.2pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: left;
+                height: 11pt
+            }
+
+            .c9 {
+                margin-left: 72.6pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: left
+            }
+
+            .c22 {
+                margin-left: 144pt;
+                padding-top: 37.2pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: left
+            }
+
+            .c12 {
+                margin-left: 6.4pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: left
+            }
+
+            .c2 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.15;
+                text-align: left;
+                height: 11pt
+            }
+
+            .c18 {
+                padding-top: 9.2pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: center
+            }
+
+            .c26 {
+                padding-top: 9.2pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: left
+            }
+
+            .c20 {
+                padding-top: 9.9pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: center
+            }
+
+            .c10 {
+                margin-left: 107.8pt;
+                border-spacing: 0;
+                border-collapse: collapse;
+                margin-right: auto
+            }
+
+            .c11 {
+                border-spacing: 0;
+                border-collapse: collapse;
+                margin-right: auto
+            }
+
+            .c3 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: center
+            }
+
+            .c13 {
+                background-color: #ffffff;
+                max-width: 467.6pt;
+                padding: 70.7pt 72.4pt 124.2pt 72pt
+            }
+
+            .c28 {
+                font-size: 16pt
+            }
+
+            .c6 {
+                height: 37.3pt
+            }
+
+            .c15 {
+                height: 40.6pt
+            }
+
+            .c5 {
+                height: 31.6pt
+            }
+
+            .c27 {
+                height: 37.4pt
+            }
+
+            .c24 {
+                height: 40.4pt
+            }
+
+            .c21 {
+                height: 36pt
+            }
+
+            .c25 {
+                height: 11pt
+            }
+
+            .title {
+                padding-top: 24pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 36pt;
+                padding-bottom: 6pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .subtitle {
+                padding-top: 18pt;
+                color: #666666;
+                font-size: 24pt;
+                padding-bottom: 4pt;
+                font-family: "Georgia";
+                line-height: 1.15;
+                page-break-after: avoid;
+                font-style: italic;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            li {
+                color: #000000;
+                font-size: 11pt;
+                font-family: "Arial"
+            }
+
+            p {
+                margin: 0;
+                color: #000000;
+                font-size: 11pt;
+                font-family: "Arial"
+            }
+
+            h1 {
+                padding-top: 24pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 24pt;
+                padding-bottom: 6pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h2 {
+                padding-top: 18pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 18pt;
+                padding-bottom: 4pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h3 {
+                padding-top: 14pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 14pt;
+                padding-bottom: 4pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h4 {
+                padding-top: 12pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 12pt;
+                padding-bottom: 2pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h5 {
+                padding-top: 11pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 11pt;
+                padding-bottom: 2pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h6 {
+                padding-top: 10pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 10pt;
+                padding-bottom: 2pt;
+                font-family: "Arial";
+                line-height: 1.15;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+        </style>
+    </div>
+
+</body>
+
+
+
+<script>
+    var button = document.getElementById("pdfButton");
+    var makepdf = document.getElementById("generatePDF");
+    button.addEventListener("click", function () {
+        var mywindow = window.open("", "PRINT", "height=600,width=600");
+        mywindow.document.write(makepdf.innerHTML);
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+        return true;
+    });
+</script>
+
+</html>

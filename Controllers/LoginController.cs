@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using SeniorProject.Data;
 using SeniorProject.Models;
 using SeniorProject.ViewModels;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace SeniorProject.Controllers
 {
@@ -24,48 +26,58 @@ namespace SeniorProject.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public ActionResult Instruct()
-        {
-            return View();
-        }
 
 
         //----------------------------------
-
+        #region CheckLogin+Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // information from login page is passed to parameter from login index view
         public ActionResult check(FacultyMembers member)
         {
-            // checking if info match db
-            var currentMember = applicationDbContext.FacultyMembers.FirstOrDefault(
+            // checking if user info is available in the database
+                var currentMember = applicationDbContext.FacultyMembers.FirstOrDefault(
                 x => x.AcademicID == member.AcademicID && x.Password == member.Password);
 
-            //checking role
-            //var roleCheck = applicationDbContext.FacultyMembers.FirstOrDefault(x => x.Role == "admin");
-
+            //checking user role
+            //1- If user is Admin- Go to admin page
+            //2- If user is Faculty- Go to users Home Page
 
             if (currentMember != null)
             {
+
                 if (currentMember.Role == "Admin")
                 {
-
                     return View("AdminHome");
-
                 }
                 else
                 {
-                    ViewData["thisdata"] = currentMember;
-                    return View("/Views/Home/Index.cshtml");
+                    //passing information to the session helper to maintain while session is Active
+                    TempData["name"] = currentMember.Name;
+                    HttpContext.Session.SetString(Helper.ROLE, currentMember.Role);
+                    HttpContext.Session.SetString(Helper.UserName, currentMember.Name);
+                    HttpContext.Session.SetInt32(Helper.UserId, currentMember.Id);
+
+                    return RedirectToAction("Index", "Home", currentMember);
                 }
             }
             else
-            { TempData["Message"] = "Wrong Password or id"; }
+            { TempData["Message"] = "Wrong Password or id";  }
             return RedirectToAction("Index");
         }
 
+        public IActionResult Logout()
+        {
+            if (CheckAuth(HttpContext))
+            {
+                HttpContext.Session.Clear();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
 
 
+        #region FacultyMembers List
         // making a list for the adminstrator
 
         [HttpGet]
@@ -86,7 +98,10 @@ namespace SeniorProject.Controllers
 
             return View(viewModel);
         }
+        #endregion
 
+
+        #region Create Faculty
         //=================================================================================
 
         //Create a new user(faculty member) to the system from adminstration page
@@ -104,25 +119,44 @@ namespace SeniorProject.Controllers
             {
                 return View(viewModel);
             }
-
-            var member = new FacultyMembers
+            try
             {
-                AcademicID = viewModel.AcademicID,
-                Name = viewModel.Name,
-                Password = viewModel.Password,
-                Role = viewModel.Role,
+                var member = new FacultyMembers
+                {
+                    AcademicID = viewModel.AcademicID,
+                    Name = viewModel.Name,
+                    Password = viewModel.Password,
+                    Role = viewModel.Role,
 
-            };
+                };
+                if(viewModel.Role.Equals("Instructor")|| viewModel.Role.Equals("Coordinator")) { 
+                var teacher = new Teachers
+                {               
+                    teacher_Name = viewModel.Name,
+                    AcademicId = viewModel.AcademicID
+                };
+                applicationDbContext.Teachers.Add(teacher);
+                    }
 
-            applicationDbContext.FacultyMembers.Add(member);
-            applicationDbContext.SaveChanges();
+                applicationDbContext.FacultyMembers.Add(member);
+            
+                applicationDbContext.SaveChanges();
 
-            return RedirectToAction("AdminList");
+                return RedirectToAction("AdminList");
+            }
+            catch (Exception ex)
+            {
+
+                { TempData["Message1"] = "Wrong information or maybe Empty!"; }
+                return RedirectToAction("Create");
+
+            }
+            
         }
-
+        #endregion
         //=================================================================================
 
-
+        #region Edit Faculty
         //------------Edit----------------------
         [HttpGet]
         public IActionResult Edit(int id)
@@ -163,6 +197,10 @@ namespace SeniorProject.Controllers
             return RedirectToAction("AdminList");
         }
 
+        #endregion
+
+
+        #region Delete Faculty
         //=================================================================================
 
         //-----------Delete----------------
@@ -198,9 +236,13 @@ namespace SeniorProject.Controllers
         }
 
 
+        #endregion
+
+
         //================================Admin Course Related=================================================
 
-        // making a list for the Courses
+        #region CourseList
+        //making a list for the Courses
         [HttpGet]
         public ActionResult AdminCourseList()
         {
@@ -221,8 +263,12 @@ namespace SeniorProject.Controllers
                 return View(viewModel);
         }
 
+        #endregion
+
+
         //Create a new user(faculty member) to the system from adminstration page
 
+        #region Add new Course
         [HttpGet]
         public ActionResult AddCourse()
         {
@@ -249,6 +295,8 @@ namespace SeniorProject.Controllers
 
             return RedirectToAction("AdminCourseList");
         }
+
+        #endregion
         //------------Edit----------------------
         [HttpGet]
         public IActionResult EditCourse(int id)
@@ -305,17 +353,30 @@ namespace SeniorProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteCoursePost(int id)
+        public IActionResult DeleteCoursePost(int id, IFormCollection collection)
         {
-            var Deletedcourse = applicationDbContext.Courses
-                .FirstOrDefault(a => a.course_Id == id);
-            
+           
+         var x = Convert.ToInt64(collection["x"]);
 
-            applicationDbContext.Courses.Remove(Deletedcourse);
+            var course = applicationDbContext.Courses
+                .FirstOrDefault(a => a.course_Id == x);
+           
+            applicationDbContext.Courses.Remove(course);
             applicationDbContext.SaveChanges();
 
             return RedirectToAction("AdminCourseList");
         }
 
+        public static bool CheckAuth(HttpContext context)
+        {
+            return !String.IsNullOrEmpty(context.Session.GetString(Helper.UserName));
+        }
+
+
+        [HttpGet]
+        public IActionResult AdminHome()
+        {
+            return View();
+        }
     }
 }

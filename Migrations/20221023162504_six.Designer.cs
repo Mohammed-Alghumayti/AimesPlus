@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeniorProject.Data;
 
@@ -10,9 +11,10 @@ using SeniorProject.Data;
 namespace SeniorProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221023162504_six")]
+    partial class six
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,21 +63,20 @@ namespace SeniorProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LOdID")
+                    b.Property<int>("LOD_RefLOD_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("SO")
                         .HasColumnType("int");
 
-                    b.Property<int>("courseId")
+                    b.Property<int>("course_Refcourse_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LOdID");
+                    b.HasIndex("LOD_RefLOD_Id");
 
-                    b.HasIndex("courseId")
-                        .IsUnique();
+                    b.HasIndex("course_Refcourse_Id");
 
                     b.ToTable("ArticulationMatrix");
                 });
@@ -561,13 +562,13 @@ namespace SeniorProject.Migrations
                 {
                     b.HasOne("SeniorProject.Models.LOD", "LOD_Ref")
                         .WithMany()
-                        .HasForeignKey("LOdID")
+                        .HasForeignKey("LOD_RefLOD_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SeniorProject.Models.Course", "course_Ref")
-                        .WithOne("articulationMatrix")
-                        .HasForeignKey("SeniorProject.Models.ArticulationMatrix", "courseId")
+                        .WithMany()
+                        .HasForeignKey("course_Refcourse_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -579,7 +580,7 @@ namespace SeniorProject.Migrations
             modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixActivities", b =>
                 {
                     b.HasOne("SeniorProject.Models.ArticulationMatrix", "ArticulationMatrix_Ref")
-                        .WithMany("Activities")
+                        .WithMany()
                         .HasForeignKey("ArticulationMatrix_RefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -598,7 +599,7 @@ namespace SeniorProject.Migrations
             modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixAssessmentTools", b =>
                 {
                     b.HasOne("SeniorProject.Models.ArticulationMatrix", "ArticulationMatrix_Ref")
-                        .WithMany("AssessmentTools")
+                        .WithMany()
                         .HasForeignKey("ArticulationMatrix_RefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -740,18 +741,6 @@ namespace SeniorProject.Migrations
                         .IsRequired();
 
                     b.Navigation("teacherCourse_Ref");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrix", b =>
-                {
-                    b.Navigation("Activities");
-
-                    b.Navigation("AssessmentTools");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.Course", b =>
-                {
-                    b.Navigation("articulationMatrix");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,6 +12,7 @@ namespace SeniorProject.Data
         public DbSet<ArticulationMatrix> ArticulationMatrix { get; set; }
         public DbSet<FacultyMembers> FacultyMembers { get; set; }
         public DbSet<ArticulationMatrixActivities> ArticulationMatrixActivities { get; set; }
+        public DbSet<ArticulationMatrixAssessmentTools> ArticulationMatrixAssessmentTools { get; set; }
         public DbSet<Activities> Activities { get; set; }
         public DbSet<AssessmentTools> AssessmentTools { get; set; }
         public DbSet<CourseCatalog> CourseCatalog { get; set; }

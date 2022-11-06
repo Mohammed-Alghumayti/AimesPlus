@@ -1,5 +1,4 @@
 html {
-    
     font-size: 14px;
 }
 
@@ -14,5 +13,9 @@ html {
   min-height: 100%;
 }
 
-
+body {
+    background-image: url('/content/images/dashboard_login.png');
+    margin: 0;
+}
+  
 

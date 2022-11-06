@@ -7,10 +7,10 @@ namespace SeniorProject.ViewModels
     public class TeachersCourseListViewModel
     {
         public List<TeachersCoursesItem> teachersCourses { get; set; }
+        public string Query { get; set; }
 
         public class TeachersCoursesItem
         {
-            
             public int teacherCourse_Id { get; set; }
             public Course course_Ref { get; set; }
             public Teachers teacher_Ref { get; set; }

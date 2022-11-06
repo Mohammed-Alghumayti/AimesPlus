@@ -1,0 +1,195 @@
+﻿@model ArticulationMatrix;
+
+@{
+    var coursename = ViewData["CourseName"];
+
+}
+
+
+<h3>ArticulationMatrix Page</h3>
+
+<h1 class="display-2 font-monospace fw-bold pb-5 mb-4" style="font: bold;">@Context.Session.GetString(Helper.course_CODE) </h1>
+
+<a asp-action="List" asp-controller="CoursePage" asp-route-coursecode="@Context.Session.GetString(Helper.course_CODE)"
+   class="btn btn-secondary">Return To Course Page</a>
+
+<br />
+<br />
+<div class="card">
+    <div class="card-header">
+        <h3>CLO Object</h3>
+    </div>
+    <div class="card-body">
+        <form class="row g-3" asp-controller="ArticulationMatrix" asp-action="CreateCLO" method="post">
+            <input type="hidden" asp-for="course_Code" />
+
+            <div class="col-md-2">
+                <label for="inputEmail4" class="form-label">CLO Number</label>
+                <input type="number" class="form-control" id="inputEmail4" placeholder="Enter CLO number" asp-for="articNum">
+            </div>
+
+            <div class="col-md-10">
+                <label for="inputEmail4" class="form-label">CLO</label>
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Enter CLO text here.." asp-for="CLO">
+            </div>
+
+            <div class="col-md-5">
+                <label for="inputState" class="form-label">LOD (Learning outcome domain)</label>
+                <select id="inputState" class="form-select" asp-items="@ViewBag.lods" asp-for="LOdID">
+                    <option>---Please select LOD---</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="inputState" class="form-label">SO (Student Outcome)</label>
+                <div class="col-md-11">
+                    <select id="inputState" class="form-select " asp-for="SO">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <label for="formassesing">Assesing So</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Assessing_SO" value="true" id="flexRadioDefault1">
+                    <label class="form-check-label" for="assessingSo">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Assessing_SO" value="false" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="assessingSo2">
+                        No
+                    </label>
+                </div>
+            </div>
+
+            <div class="m-2">
+                <button class="btn btn-primary" type="submit">Save CLO</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.Id != 0)
+{
+
+    <div class="row mt-2">
+        <div class="card  col-xl-6 col-sm-12">
+            <div class="card-header">
+                <h3>Assessment tools</h3>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="addAssessmentTools" asp-controller="ArticulationMatrix" method="post">
+                    <input type="hidden" asp-for="Id" name="idArticulationMatrix" />
+                    <div>
+                        <div class="">
+                            <label for="inputState12" class="form-label">Assessment tools list</label>
+                            <select id="inputState12" class="form-select select2" asp-items="@ViewBag.assessmentTools" name="idAssessmentTool">
+                                <option>---Please select Assessment tool---</option>
+                            </select>
+
+                            <div class="col-md-12">
+                                <label for="inputEmail4" class="form-label">Week</label>
+                                <input type="number" class="form-control" id="inputEmail4" placeholder="Enter the week number" name="week">
+                            </div>
+
+
+                        </div>
+                        <div class="m-2">
+                            <button class="btn btn-primary" type="submit">Add assessment tool</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-xl-6 col-sm-12">
+            <div class="card-header">
+                <h3>Assessment tools created</h3>
+            </div>
+            <div class="body">
+                <div style="height:300px;overflow-y:scroll">
+                    <ul class="list-group">
+                        @foreach (var tool in Model.AssessmentTools)
+                        {
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h3>@tool.AssessmentTools_Ref?.name - Week @tool.WeekNo</h3>
+                                <form asp-action="DeleteAssessmentTools" asp-controller="ArticulationMatrix" method="post">
+                                    <input type="hidden" asp-for="Id" name="idArticulationMatrix" />
+                                    <input type="hidden" value="@tool.Id" name="idAssessmentTool" />
+
+                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
+                                </form>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="card  col-xl-6 col-sm-12">
+            <div class="card-header">
+                <h3>Activities</h3>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="addActivities" asp-controller="ArticulationMatrix" method="post">
+                    <input type="hidden" asp-for="Id" name="idArticulationMatrix" />
+                    <div>
+                        <div class="">
+                            <label for="inputState12" class="form-label">Activities liste</label>
+                            <select id="inputState12" class="form-select select2" asp-items="@ViewBag.acteveties" name="idActivities" multiple>
+                                <option>---Please select activities---</option>
+                            </select>
+
+                        </div>
+                        <div class="m-2">
+                            <button class="btn btn-primary" type="submit">Add Activities</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card col-xl-6 col-sm-12">
+            <div class="card-header">
+                <h3>Activites Selected</h3>
+            </div>
+            <div class="body">
+                <div style="height:300px;overflow-y:scroll">
+                    <ul class="list-group">
+                        @foreach (var activity in Model.Activities)
+                        {
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h3>@activity.activity_Ref?.Name </h3>
+                                <form asp-action="DeleteActivity" asp-controller="ArticulationMatrix" method="post">
+                                    <input type="hidden" asp-for="Id" name="idArticulationMatrix" />
+                                    <input type="hidden" value="@activity.Id" name="idActivity" />
+
+                                    <button type="submit" class="btn btn-outline-danger">Remove</button>
+                                </form>
+
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+
+

@@ -22,96 +22,213 @@ namespace SeniorProject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("SeniorProject.Models.AssesmentTools", b =>
+            modelBuilder.Entity("SeniorProject.Models.Activities", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Activities_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Activities_Id"), 1L, 1);
 
-                    b.HasKey("Id");
-
-                    b.ToTable("AssesmentTools");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.CLO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CLO");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.Course", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("AssesSO")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("AssesToolsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CLOId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Credit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LODId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OutClassId")
+                    b.Property<string>("activity_Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Activities_Id");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrix", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("SOId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Assessing_SO")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CLO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LOdID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SectionsId")
+                    b.Property<int>("SO")
                         .HasColumnType("int");
 
-                    b.Property<int>("TopicsId")
+                    b.Property<int?>("articNum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("course_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("course_Refcourse_Id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssesToolsId");
+                    b.HasIndex("LOdID");
 
-                    b.HasIndex("CLOId");
+                    b.HasIndex("course_Refcourse_Id");
 
-                    b.HasIndex("InClassId");
+                    b.ToTable("ArticulationMatrix");
+                });
 
-                    b.HasIndex("LODId");
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixActivities", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasIndex("OutClassId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.HasIndex("SOId");
+                    b.Property<int>("ArticulationMatrix_RefId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("SectionsId");
+                    b.Property<int>("activity_RefActivities_Id")
+                        .HasColumnType("int");
 
-                    b.HasIndex("TopicsId");
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticulationMatrix_RefId");
+
+                    b.HasIndex("activity_RefActivities_Id");
+
+                    b.ToTable("ArticulationMatrixActivities");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixAssessmentTools", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ArticulationMatrix_RefId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AssessmentTools_ReftoolId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WeekNo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticulationMatrix_RefId");
+
+                    b.HasIndex("AssessmentTools_ReftoolId");
+
+                    b.ToTable("ArticulationMatrixAssessmentTools");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.AssessmentTools", b =>
+                {
+                    b.Property<int>("toolId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("toolId"), 1L, 1);
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("toolId");
+
+                    b.ToTable("AssessmentTools");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.Course", b =>
+                {
+                    b.Property<int>("course_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("course_Id"), 1L, 1);
+
+                    b.Property<string>("course_Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("course_Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("course_Id");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.CourseCatalog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("WeekNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("catalog_topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("course_Refcourse_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("course_Refcourse_Id");
+
+                    b.ToTable("CourseCatalog");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.Department", b =>
+                {
+                    b.Property<int>("Dept_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Dept_Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Dept_Id");
+
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("SeniorProject.Models.FacultyMembers", b =>
@@ -142,142 +259,169 @@ namespace SeniorProject.Migrations
                     b.ToTable("FacultyMembers");
                 });
 
-            modelBuilder.Entity("SeniorProject.Models.InClassAct", b =>
+            modelBuilder.Entity("SeniorProject.Models.GradeDistribution", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Assessment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SO1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SO2")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SO3")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SO4")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SO5")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SO6")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SOchoice")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("assessing_SO")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("coursecode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("percentage")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("week_Number")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("inClassActs");
+                    b.ToTable("GradeDistribution");
                 });
 
-            modelBuilder.Entity("SeniorProject.Models.Instructors", b =>
+            modelBuilder.Entity("SeniorProject.Models.LOD", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LOD_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LOD_Id"), 1L, 1);
 
-                    b.Property<int>("AcademicID")
+                    b.Property<string>("LOD_Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LOD_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LOD_Id");
+
+                    b.ToTable("LOD");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.Session", b =>
+                {
+                    b.Property<int>("session_Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CoursesId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("session_Id"), 1L, 1);
+
+                    b.Property<int>("Dept_RefDept_Id")
                         .HasColumnType("int");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("endDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("startDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("session_Id");
+
+                    b.HasIndex("Dept_RefDept_Id");
+
+                    b.ToTable("Session");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.Student", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("StudentId");
 
-                    b.HasIndex("CoursesId");
-
-                    b.ToTable("Instructors");
+                    b.ToTable("Student");
                 });
 
-            modelBuilder.Entity("SeniorProject.Models.LOD", b =>
+            modelBuilder.Entity("SeniorProject.Models.StudentCourse", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("StuCourse_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StuCourse_Id"), 1L, 1);
 
-                    b.HasKey("Id");
-
-                    b.ToTable("LOD");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.OutClassAct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Student_RefStudentId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OutClassActs");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.Sections", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("course_Refcourse_Id")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("instructorsId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("semester")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("studentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("instructorsId");
-
-                    b.HasIndex("studentsId");
-
-                    b.ToTable("sections");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.SO", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SO");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.Students", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<double>("Marks")
+                    b.Property<double>("marks")
                         .HasColumnType("float");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StudentName")
+                    b.Property<string>("result")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("session_Refsession_Id")
+                        .HasColumnType("int");
 
-                    b.ToTable("Students");
+                    b.HasKey("StuCourse_Id");
+
+                    b.HasIndex("Student_RefStudentId");
+
+                    b.HasIndex("course_Refcourse_Id");
+
+                    b.HasIndex("session_Refsession_Id");
+
+                    b.ToTable("StudentCourse");
                 });
 
-            modelBuilder.Entity("SeniorProject.Models.Topics", b =>
+            modelBuilder.Entity("SeniorProject.Models.StudentCourseActivities", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,104 +429,327 @@ namespace SeniorProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Activities_RefActivities_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StuCourse_RefStuCourse_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("result")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Topics");
+                    b.HasIndex("Activities_RefActivities_Id");
+
+                    b.HasIndex("StuCourse_RefStuCourse_Id");
+
+                    b.ToTable("StudentCourseActivities");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.StudentCourseAssessmentTools", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("StuCourse_RefStuCourse_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("marks")
+                        .HasColumnType("float");
+
+                    b.Property<string>("remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("result")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("tool_ReftoolId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StuCourse_RefStuCourse_Id");
+
+                    b.HasIndex("tool_ReftoolId");
+
+                    b.ToTable("StudentCourseAssessmentTools");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.Teachers", b =>
+                {
+                    b.Property<int>("teacher_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("teacher_Id"), 1L, 1);
+
+                    b.Property<int>("AcademicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("teacher_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("teacher_Id");
+
+                    b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.TeachersCourse", b =>
+                {
+                    b.Property<int>("teacherCourse_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("teacherCourse_Id"), 1L, 1);
+
+                    b.Property<string>("SemesterEnd")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SemesterStart")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("course_Refcourse_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("teacher_Refteacher_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("teacherCourse_Id");
+
+                    b.HasIndex("course_Refcourse_Id");
+
+                    b.HasIndex("teacher_Refteacher_Id");
+
+                    b.ToTable("TeachersCourse");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.TeachingSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("teacherCourse_RefteacherCourse_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("week_Number")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("teacherCourse_RefteacherCourse_Id");
+
+                    b.ToTable("TeachingSchedule");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrix", b =>
+                {
+                    b.HasOne("SeniorProject.Models.LOD", "LOD_Ref")
+                        .WithMany()
+                        .HasForeignKey("LOdID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.Course", "course_Ref")
+                        .WithMany("articulationMatrix")
+                        .HasForeignKey("course_Refcourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LOD_Ref");
+
+                    b.Navigation("course_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixActivities", b =>
+                {
+                    b.HasOne("SeniorProject.Models.ArticulationMatrix", "ArticulationMatrix_Ref")
+                        .WithMany("Activities")
+                        .HasForeignKey("ArticulationMatrix_RefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.Activities", "activity_Ref")
+                        .WithMany()
+                        .HasForeignKey("activity_RefActivities_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArticulationMatrix_Ref");
+
+                    b.Navigation("activity_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrixAssessmentTools", b =>
+                {
+                    b.HasOne("SeniorProject.Models.ArticulationMatrix", "ArticulationMatrix_Ref")
+                        .WithMany("AssessmentTools")
+                        .HasForeignKey("ArticulationMatrix_RefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.AssessmentTools", "AssessmentTools_Ref")
+                        .WithMany()
+                        .HasForeignKey("AssessmentTools_ReftoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArticulationMatrix_Ref");
+
+                    b.Navigation("AssessmentTools_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.CourseCatalog", b =>
+                {
+                    b.HasOne("SeniorProject.Models.Course", "course_Ref")
+                        .WithMany()
+                        .HasForeignKey("course_Refcourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("course_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.Session", b =>
+                {
+                    b.HasOne("SeniorProject.Models.Department", "Dept_Ref")
+                        .WithMany()
+                        .HasForeignKey("Dept_RefDept_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dept_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.StudentCourse", b =>
+                {
+                    b.HasOne("SeniorProject.Models.Student", "Student_Ref")
+                        .WithMany()
+                        .HasForeignKey("Student_RefStudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.Course", "course_Ref")
+                        .WithMany()
+                        .HasForeignKey("course_Refcourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.Session", "session_Ref")
+                        .WithMany()
+                        .HasForeignKey("session_Refsession_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student_Ref");
+
+                    b.Navigation("course_Ref");
+
+                    b.Navigation("session_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.StudentCourseActivities", b =>
+                {
+                    b.HasOne("SeniorProject.Models.Activities", "Activities_Ref")
+                        .WithMany()
+                        .HasForeignKey("Activities_RefActivities_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.StudentCourse", "StuCourse_Ref")
+                        .WithMany()
+                        .HasForeignKey("StuCourse_RefStuCourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activities_Ref");
+
+                    b.Navigation("StuCourse_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.StudentCourseAssessmentTools", b =>
+                {
+                    b.HasOne("SeniorProject.Models.StudentCourse", "StuCourse_Ref")
+                        .WithMany()
+                        .HasForeignKey("StuCourse_RefStuCourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.AssessmentTools", "tool_Ref")
+                        .WithMany()
+                        .HasForeignKey("tool_ReftoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StuCourse_Ref");
+
+                    b.Navigation("tool_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.TeachersCourse", b =>
+                {
+                    b.HasOne("SeniorProject.Models.Course", "course_Ref")
+                        .WithMany()
+                        .HasForeignKey("course_Refcourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SeniorProject.Models.Teachers", "teacher_Ref")
+                        .WithMany()
+                        .HasForeignKey("teacher_Refteacher_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("course_Ref");
+
+                    b.Navigation("teacher_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.TeachingSchedule", b =>
+                {
+                    b.HasOne("SeniorProject.Models.TeachersCourse", "teacherCourse_Ref")
+                        .WithMany()
+                        .HasForeignKey("teacherCourse_RefteacherCourse_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("teacherCourse_Ref");
+                });
+
+            modelBuilder.Entity("SeniorProject.Models.ArticulationMatrix", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("AssessmentTools");
                 });
 
             modelBuilder.Entity("SeniorProject.Models.Course", b =>
                 {
-                    b.HasOne("SeniorProject.Models.AssesmentTools", "AssesTools")
-                        .WithMany()
-                        .HasForeignKey("AssesToolsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.CLO", "CLO")
-                        .WithMany()
-                        .HasForeignKey("CLOId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.InClassAct", "InClass")
-                        .WithMany()
-                        .HasForeignKey("InClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.LOD", "LOD")
-                        .WithMany()
-                        .HasForeignKey("LODId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.OutClassAct", "OutClass")
-                        .WithMany()
-                        .HasForeignKey("OutClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.SO", "SO")
-                        .WithMany()
-                        .HasForeignKey("SOId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.Sections", "Sections")
-                        .WithMany()
-                        .HasForeignKey("SectionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.Topics", "Topics")
-                        .WithMany()
-                        .HasForeignKey("TopicsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssesTools");
-
-                    b.Navigation("CLO");
-
-                    b.Navigation("InClass");
-
-                    b.Navigation("LOD");
-
-                    b.Navigation("OutClass");
-
-                    b.Navigation("SO");
-
-                    b.Navigation("Sections");
-
-                    b.Navigation("Topics");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.Instructors", b =>
-                {
-                    b.HasOne("SeniorProject.Models.Course", "Courses")
-                        .WithMany()
-                        .HasForeignKey("CoursesId");
-
-                    b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("SeniorProject.Models.Sections", b =>
-                {
-                    b.HasOne("SeniorProject.Models.Instructors", "instructors")
-                        .WithMany()
-                        .HasForeignKey("instructorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SeniorProject.Models.Students", "students")
-                        .WithMany()
-                        .HasForeignKey("studentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("instructors");
-
-                    b.Navigation("students");
+                    b.Navigation("articulationMatrix");
                 });
 #pragma warning restore 612, 618
         }

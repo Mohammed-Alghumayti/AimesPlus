@@ -1,0 +1,50 @@
+﻿@model SeniorProject.ViewModels.CoursePageAddTopicViewModel
+
+@{
+    var courseObj = (Course)ViewData["CourseObj"];
+
+}
+<h1 class="display-2 font-monospace fw-bold pb-5 mb-4" style="font: bold;">@courseObj.course_Code </h1>
+
+<h1>AddTopic</h1>
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddTopicPost" method="post">
+
+            <input asp-for="courseID" type="hidden" value="@courseObj.course_Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WeekNo" class="control-label"></label>
+                <input asp-for="WeekNo" class="form-control" />
+                <span asp-validation-for="WeekNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="catalog_topic" class="control-label"></label>
+                <textarea asp-for="catalog_topic" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="catalog_topic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="details" class="control-label"></label>
+                <textarea asp-for="details" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <span asp-validation-for="details" class="text-danger"></span>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary col-md-12" />
+            </div>
+            
+        </form>
+    </div>
+</div>
+<br />
+
+<div>
+    <a asp-action="List" class="btn btn-secondary" asp-route-coursecode="@courseObj.course_Code">Back to Course Page</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

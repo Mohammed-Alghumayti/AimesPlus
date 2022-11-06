@@ -1,0 +1,80 @@
+﻿@model GradeDistribution
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="EditModal-@Model.Id" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.week_Number - @Model.Assessment | Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="EditGradesPost" method="post" asp-controller="CoursePage">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="coursecode" />
+                    <input type="hidden" asp-for="Assessment" />
+                    <input type="hidden" asp-for="week_Number" />
+                    <div class="row g-3">
+
+                        <div class="col-sm">
+                            <input type="text" asp-for="week_Number" class="form-control" value="@Model.week_Number" aria-label="percentage" disabled>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" asp-for="Assessment" class="form-control" value="@Model.Assessment" aria-label="percentage" disabled>
+                        </div>
+
+                        <div class="col-sm">
+                            <input type="text" asp-for="percentage" class="form-control" placeholder="%" aria-label="percentage">
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" asp-for="SO1" class="form-control" placeholder="SO1" aria-label="SO">
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" asp-for="SO2" class="form-control" placeholder="SO2" aria-label="SO">
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" asp-for="SO3" class="form-control" placeholder="SO3" aria-label="SO">
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" asp-for="SO4" class="form-control" placeholder="SO4" aria-label="SO">
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" asp-for="SO5" class="form-control" placeholder="SO5" aria-label="SO">
+                        </div>
+                        <div class="col-sm">
+                            <input type="text" asp-for="SO6" class="form-control" placeholder="SO6" aria-label="SO">
+                        </div>
+
+                        <br />
+                        <br />
+
+                    </div>
+
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary mt-4" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary mt-4">Save changes</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+
+    .modal-dialog {
+        height: 30%; /* = 90% of the .modal-backdrop block = %90 of the screen */
+    }
+
+    .modal-content {
+        height: 80%; /* = 100% of the .modal-dialog block */
+    }
+
+</style>

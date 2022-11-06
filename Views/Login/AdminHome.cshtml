@@ -1,18 +1,22 @@
 ﻿
-
-<h1 class="display-1">Admin Home</h1>
 <br />
+<h1 class="display-1 font-monospace">Admin Home</h1>
+<br />
+<img id="logo1" class="position-absolute top-1 end-0" src="https://i.imgur.com/uM5PsQc.png" />
 
-<div class="card" style="width: 50rem;">  
+
+<br />
+<div id="fw" class="card border-4" style="width: 50rem;">
     <div class="card-body">
         <h5 class="card-title">Assign courses</h5>
         <p class="card-text">In this page the adminstrator will be able to assign courses to specific instructors.</p>
-        <a href="#" class="btn btn-primary">Go to page</a>
+        <a asp-controller="TeachersCourse" asp-action="List" class="btn btn-primary">Go to page</a>
     </div>
 </div>
 <br />
+<br />
 
-<div class="card" style="width: 50rem;">
+<div id="fw" class="card border-4" style="width: 50rem;">
     <div class="card-body">
         <h5 class="card-title">View Courses</h5>
         <p class="card-text">View all the available courses at the faculty with the ability to add or remove some.</p>
@@ -20,8 +24,9 @@
     </div>
 </div>
 <br />
+<br />
 
-    <div class="card" style="width: 50rem;">
+    <div id="fw" class="card border-4" style="width: 50rem;">
     <div class="card-body">
         <h5 class="card-title">View Faculty members</h5>
         <p class="card-text">View all the faculty members currently available including, Instructors, Coordinators and Adminstrators.</p>
@@ -29,3 +34,24 @@
     </div>
    </div>
 
+
+
+   <style>
+       #fw{
+        background: rgb(221,254,166);
+        background: linear-gradient(29deg, rgba(221,254,166,1) 0%, rgba(4,158,130,1) 100%);
+        transition: all 0.2s ease;
+        border-radius: 30px;
+       }
+       
+       #fw:hover{
+        
+        background: rgb(199,242,164);
+       }
+
+        #logo1 {
+            margin-top: -190px;
+            margin-right: 10px;
+            width: 250px;
+        }
+   </style>

@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using SeniorProject.Data;
 using SeniorProject.Models;
 using SeniorProject.ViewModels;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace SeniorProject.Controllers
 {
@@ -12,10 +16,12 @@ namespace SeniorProject.Controllers
     {
 
         private readonly ApplicationDbContext applicationDbContext;
+        private readonly INotyfService _toastNotification;
 
-        public LoginController(ApplicationDbContext applicationDbContext)
+        public LoginController(ApplicationDbContext applicationDbContext, INotyfService _toastNotification)
         {
             this.applicationDbContext = applicationDbContext;
+            this._toastNotification = _toastNotification;
         }
 
         // GET: LoginController
@@ -24,39 +30,45 @@ namespace SeniorProject.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public ActionResult Instruct()
+
+        public IActionResult loading()
         {
             return View();
         }
 
 
         //----------------------------------
-
+        #region CheckLogin+Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
+        // information from login page is passed to parameter from login index view
         public ActionResult check(FacultyMembers member)
         {
-            // checking if info match db
+            // checking if user info is available in the database
             var currentMember = applicationDbContext.FacultyMembers.FirstOrDefault(
-                x => x.AcademicID == member.AcademicID && x.Password == member.Password);
+            x => x.AcademicID == member.AcademicID && x.Password == member.Password);
 
-            //checking role
-            //var roleCheck = applicationDbContext.FacultyMembers.FirstOrDefault(x => x.Role == "admin");
-
+            //checking user role
+            //1- If user is Admin- Go to admin page
+            //2- If user is Faculty- Go to users Home Page
 
             if (currentMember != null)
             {
+
                 if (currentMember.Role == "Admin")
                 {
-
                     return View("AdminHome");
-
                 }
                 else
                 {
-                    ViewData["thisdata"] = currentMember;
-                    return View("/Views/Home/Index.cshtml");
+                    string academic = Convert.ToString(currentMember.AcademicID);
+                    //passing information to the session helper to maintain while session is Active
+                    TempData["name"] = currentMember.Name;
+                    HttpContext.Session.SetString(Helper.ROLE, currentMember.Role);
+                    HttpContext.Session.SetString(Helper.UserName, currentMember.Name);
+                    HttpContext.Session.SetString(Helper.UserId, academic);
+
+                    return RedirectToAction("Index", "Home", currentMember);
                 }
             }
             else
@@ -64,8 +76,18 @@ namespace SeniorProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Logout()
+        {
+            if (CheckAuth(HttpContext))
+            {
+                HttpContext.Session.Clear();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
 
 
+        #region FacultyMembers List
         // making a list for the adminstrator
 
         [HttpGet]
@@ -86,7 +108,10 @@ namespace SeniorProject.Controllers
 
             return View(viewModel);
         }
+        #endregion
 
+
+        #region Create Faculty
         //=================================================================================
 
         //Create a new user(faculty member) to the system from adminstration page
@@ -105,24 +130,53 @@ namespace SeniorProject.Controllers
                 return View(viewModel);
             }
 
-            var member = new FacultyMembers
+            // need to fix
+            var checkAcadimicID = applicationDbContext.FacultyMembers
+                .Where(c => c.AcademicID == viewModel.AcademicID)
+                .FirstOrDefault();
+
+            if (checkAcadimicID == null)
             {
-                AcademicID = viewModel.AcademicID,
-                Name = viewModel.Name,
-                Password = viewModel.Password,
-                Role = viewModel.Role,
 
-            };
+                var member = new FacultyMembers
+                {
+                    AcademicID = viewModel.AcademicID,
+                    Name = viewModel.Name,
+                    Password = viewModel.Password,
+                    Role = viewModel.Role,
 
-            applicationDbContext.FacultyMembers.Add(member);
-            applicationDbContext.SaveChanges();
+                };
 
-            return RedirectToAction("AdminList");
+                if (viewModel.Role.Equals("Instructor") || viewModel.Role.Equals("Coordinator"))
+                {
+                    var teacher = new Teachers
+                    {
+                        teacher_Name = viewModel.Name,
+                        AcademicId = viewModel.AcademicID
+                    };
+                    applicationDbContext.Teachers.Add(teacher);
+                }
+
+                applicationDbContext.FacultyMembers.Add(member);
+
+                applicationDbContext.SaveChanges();
+
+                //popp notification
+                _toastNotification.Success("Success add faculty member");
+
+                return RedirectToAction("AdminList");
+            }
+            else
+            {
+                _toastNotification.Error("This Acadimic ID has alredy assign for another faculty member");
+                return RedirectToAction("Create");
+            }
         }
+        #endregion
 
         //=================================================================================
 
-
+        #region Edit Faculty
         //------------Edit----------------------
         [HttpGet]
         public IActionResult Edit(int id)
@@ -160,9 +214,15 @@ namespace SeniorProject.Controllers
             applicationDbContext.FacultyMembers.Update(facultyMembers);
             applicationDbContext.SaveChanges();
 
+            _toastNotification.Success("Success Edit Detailes of faculty member");
+
             return RedirectToAction("AdminList");
         }
 
+        #endregion
+
+
+        #region Delete Faculty
         //=================================================================================
 
         //-----------Delete----------------
@@ -191,38 +251,52 @@ namespace SeniorProject.Controllers
             var facultyMembers = applicationDbContext.FacultyMembers
                 .FirstOrDefault(a => a.Id == id);
 
+            var tech = applicationDbContext.Teachers
+                .Where(t => t.AcademicId == facultyMembers.AcademicID).FirstOrDefault();
+
             applicationDbContext.FacultyMembers.Remove(facultyMembers);
+            applicationDbContext.Teachers.Remove(tech);
             applicationDbContext.SaveChanges();
+
+            _toastNotification.Success("Success Delete faculty member");
 
             return RedirectToAction("AdminList");
         }
 
 
+        #endregion
+
+
         //================================Admin Course Related=================================================
 
-        // making a list for the Courses
+        #region CourseList
+        //making a list for the Courses
         [HttpGet]
         public ActionResult AdminCourseList()
         {
-     
-                var Courses = applicationDbContext.Courses.ToList();
 
-                var viewModel = new CourseListViewModel
+            var Courses = applicationDbContext.Courses.ToList();
+
+            var viewModel = new CourseListViewModel
+            {
+                courses = Courses.Select(a => new CourseListViewModel.CourseItem
                 {
-                    courses = Courses.Select(a => new CourseListViewModel.CourseItem
-                    {
-                        course_Id = a.course_Id,
-                        course_Title = a.course_Title,
-                        course_Code = a.course_Code
-                        
-                    }).ToList()
-                };
+                    course_Id = a.course_Id,
+                    course_Title = a.course_Title,
+                    course_Code = a.course_Code
 
-                return View(viewModel);
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
+
+        #endregion
+
 
         //Create a new user(faculty member) to the system from adminstration page
 
+        #region Add new Course
         [HttpGet]
         public ActionResult AddCourse()
         {
@@ -237,19 +311,38 @@ namespace SeniorProject.Controllers
                 return View(viewModel);
             }
 
-            var course = new Course
+            var checkCourseExist = applicationDbContext.Courses
+                .Where(c => c.course_Code == viewModel.course_Code)
+                .FirstOrDefault();
+
+            if (checkCourseExist == null)
             {
-                course_Id = viewModel.course_Id,
-                course_Title = viewModel.course_Title,
-                course_Code = viewModel.course_Code
-            };
 
-            applicationDbContext.Courses.Add(course);
-            applicationDbContext.SaveChanges();
+                var course = new Course
+                {
+                    course_Id = viewModel.course_Id,
+                    course_Title = viewModel.course_Title,
+                    course_Code = viewModel.course_Code
+                };
 
-            return RedirectToAction("AdminCourseList");
+                applicationDbContext.Courses.Add(course);
+                applicationDbContext.SaveChanges();
+
+                _toastNotification.Success("Success add new Course");
+
+                return RedirectToAction("AdminCourseList");
+            }
+            else
+            {
+                _toastNotification.Error("This Course is Already Exist");
+                return RedirectToAction("AddCourse");
+            }
         }
+
+        #endregion
         //------------Edit----------------------
+
+
         [HttpGet]
         public IActionResult EditCourse(int id)
         {
@@ -282,6 +375,8 @@ namespace SeniorProject.Controllers
             applicationDbContext.Courses.Update(Course);
             applicationDbContext.SaveChanges();
 
+            _toastNotification.Success("Success Edit the Course");
+
             return RedirectToAction("AdminCourseList");
         }
 
@@ -298,24 +393,43 @@ namespace SeniorProject.Controllers
                 Course_Id = DelCourse.course_Id,
                 Course_Title = DelCourse.course_Title,
                 Course_Code = DelCourse.course_Code
-                
+
             };
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult DeleteCoursePost(int id)
+        public IActionResult DeleteCoursePost(int id, IFormCollection collection)
         {
-            var Deletedcourse = applicationDbContext.Courses
-                .FirstOrDefault(a => a.course_Id == id);
-            
 
-            applicationDbContext.Courses.Remove(Deletedcourse);
+            var x = Convert.ToInt64(collection["x"]);
+
+            var course = applicationDbContext.Courses
+                .FirstOrDefault(a => a.course_Id == x);
+
+            applicationDbContext.Courses.Remove(course);
             applicationDbContext.SaveChanges();
+
+            _toastNotification.Success("Success Delete the Course");
 
             return RedirectToAction("AdminCourseList");
         }
 
+
+        //----------------------------------
+
+
+
+        public static bool CheckAuth(HttpContext context)
+        {
+            return !String.IsNullOrEmpty(context.Session.GetString(Helper.UserName));
+        }
+
+        [HttpGet]
+        public IActionResult AdminHome()
+        {
+            return View();
+        }
     }
 }

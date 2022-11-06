@@ -1,18 +1,99 @@
-﻿@using SeniorProject.Models;
+﻿@model SeniorProject.ViewModels.TeachersCourseListViewModel
+
 @{
     ViewData["Title"] = "Home Page";
-    var member = (FacultyMembers)ViewData["thisdata"];
+
+    //to show faculty member name
+    var member = ViewData["thisdata"];
 }
 
+
+<img id="logo" width="150px" class="position-absolute bottom-0 end-0" src="https://i.imgur.com/uM5PsQc.png" />
+
 <div class="text-center">
-    <h1 class="display-4">Welcome @member.Name</h1>
-    <p></p>
-    
+    <h1 id="name" class="display-4 font-monospace fw-bold">Welcome @Context.Session.GetString(Helper.UserName) </h1>
 </div>
 
-<style type="text/css">
-    body {
-        background-image: url('content/Images/Dashboard_Login.jpg');
-        margin: 0;
+
+<div class="custom-shape-divider-top-1667419937">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+</div>
+
+
+<a asp-controller="Home" asp-action="InstList" class="btn btn-primary">Instructors List</a>
+<br />
+<br />
+<br />
+
+<h3>Your Courses</h3>
+
+<br />
+@{
+    try
+    {
+
+        foreach (var item in Model.teachersCourses)
+        {
+
+            <div class="card text-white bg-secondary mb-4 mx-2" style="min-width: 18rem; display:inline-table;">
+                 <div class="card-header">@Html.DisplayFor(m => item.course_Ref.course_Code)</div>
+                     <div class="card-body">
+                          <h4 class="card-title d-inline">@Html.DisplayFor(m => item.course_Ref.course_Title)</h4>
+                          <img id="fcit" class="d-inline" width="80px" src="https://i.imgur.com/J1epCqN.png">
+                          <br /><br />
+                          <div style="text-align:right;">
+                               <a asp-controller="CoursePage" asp-action="List" class="btn btn-primary"
+                                asp-route-coursecode="@item.course_Ref.course_Code">View Course</a>
+                               <br />
+                          </div>
+                     </div>
+            </div>
+        }
+
     }
+    catch (Exception)
+    {
+    <h1>error</h1>
+
+    }
+}
+
+<style>
+    #logo{
+        margin-right: 10px;
+        margin-bottom: -0px;
+    }
+
+    #name{
+        color: #172d44;
+    }
+
+    .custom-shape-divider-top-1667419937 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        margin-top: 55px;
+        z-index: -991;
+    }
+
+        .custom-shape-divider-top-1667419937 svg {
+            position: relative;
+            display: block;
+            width: calc(277% + 1.3px);
+            height: 180px;
+        }
+
+        .custom-shape-divider-top-1667419937 .shape-fill {
+            fill: #f3fff7;
+        }
+
+        #fcit{
+            margin-left: 60px;
+           
+        }
 </style>

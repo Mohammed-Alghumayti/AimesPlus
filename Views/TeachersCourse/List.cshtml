@@ -4,12 +4,28 @@
     ViewData["Title"] = "List";
 }
 
-<h1>List</h1>
+<br />
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Assign New</a>
-</p>
-<table class="table">
+<h1>Instructor List</h1>
+<hr id="line" />
+<br />
+
+<a asp-controller="Login" asp-action="AdminHome" class="btn btn-secondary">Admin Home</a>
+<br />
+<br />
+<form asp-action="Search" method="get">
+    <div class="row">
+        <div class="col-8">
+            <input asp-for="Query" class="form-control" />
+        </div>
+        <p class="col-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </p>
+
+    </div>
+</form>
+
+<table class="table table-light table-hover table-bordered">
     <thead>
         <tr>
             <th>
@@ -46,14 +62,10 @@
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.SemesterEnd)
-                        </td><td>
-                            @Html.DisplayFor(m => item.teacherCourse_Id)
                         </td>
                         <td>
-                            
-                            
-                            @Html.ActionLink("Delete", "Delete1", new {  id = item.teacherCourse_Id },new {@class="btn btn-danger"})
-                            
+
+                            @Html.ActionLink("Delete", "Delete", new {  id = item.teacherCourse_Id },new {@class="btn btn-danger"})
                         </td>
 
                     </tr>
@@ -61,10 +73,24 @@
             }
             catch (Exception)
             {
-                <h1>error</h1>
+                <h1>Somthing went wrong</h1>
 
             }
         }
     </tbody>
 
 </table>
+
+<style>
+    #line {
+        width: 20%;
+        opacity: 50%;
+        color: #717970;
+        height: 2px;
+    }
+</style>
+
+<a asp-action="Create" class="btn btn-primary col-md-12">Assign New</a>
+
+
+

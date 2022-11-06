@@ -4,35 +4,75 @@
     ViewData["Title"] = "AddCourse";
 }
 
-<h1>AddCourse</h1>
+<h2 class="text-uppercase" id="add-head">Add Course</h2>
+<hr id="line" />
+<img id="logo1" class="position-absolute top-1 end-0" src="https://i.imgur.com/uM5PsQc.png" />
 
-<h4>Course</h4>
-<hr />
+
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3 ">
         <form asp-action="AddCoursePost">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="course_Title" class="control-label"></label>
+                <label class="control-label fw-bold">Course Title</label>
                 <input asp-for="course_Title" class="form-control" />
                 <span asp-validation-for="course_Title" class="text-danger"></span>
             </div>
+
+            <br />
+
             <div class="form-group">
-                <label asp-for="course_Code" class="control-label"></label>
+                <label class="control-label fw-bold">Course Code</label>
                 <input asp-for="course_Code" class="form-control" />
                 <span asp-validation-for="course_Code" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-outline-primary col-md-12 fw-bold" />
             </div>
         </form>
     </div>
 </div>
+<br>
 
 <div>
-    <a asp-action="AdminCourseList">Back to List</a>
+    <a class="btn btn-secondary"  asp-action="AdminCourseList">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+    <style>
+        body {
+            background-image: url("https://i.imgur.com/bHyaKB3.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .row {
+            margin-top: 40px;
+        }
+
+        #add-head {
+            text-align: center;
+            font-size: 40px;
+            color: papayawhip;
+        }
+
+        #line {
+            width: 50%;
+            margin: 0 25% 0 25%;
+            opacity: 50%;
+            color: #FBF2CF;
+            height: 3px;
+            border-radius: 70%;
+        }
+
+        #logo1 {
+            margin-top: -90px;
+            margin-right: 10px;
+            width: 150px;
+        }
+    </style>

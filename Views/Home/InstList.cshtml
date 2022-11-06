@@ -1,0 +1,85 @@
+﻿@model SeniorProject.ViewModels.TeachersCourseListViewModel
+
+@{
+    ViewData["Title"] = "List";
+}
+<br />
+
+<h1>Instructor List</h1>
+
+<br />
+<br />
+
+<p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Home</a>
+</p>
+
+<form asp-action="Search" method="get">
+    <div class="row">
+        <div class="col-8">
+            <input asp-for="Query" class="form-control" />
+        </div>
+        <p class="col-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </p>
+
+        </div>
+ </form>
+
+<table class="table table-light table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Instructor
+            </th>
+            <th>
+                Course
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+            <th>
+                Instructor ID
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            try
+            {
+                foreach (var item in Model.teachersCourses)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.teacher_Ref.teacher_Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.course_Ref.course_Code)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(m => item.SemesterStart)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.SemesterEnd)
+                        </td>
+                        <td>
+                            <p>ID: @item.teacher_Ref.AcademicId</p>
+                        </td>
+
+                    </tr>
+                }
+            }
+            catch (Exception)
+            {
+                <h1>Something Went wrong</h1>
+
+            }
+        }
+    </tbody>
+
+</table>

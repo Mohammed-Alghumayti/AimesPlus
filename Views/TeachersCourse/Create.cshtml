@@ -2,32 +2,34 @@
 
 @{
     ViewData["Title"] = "Create";
-
-    // change date semester to list
 }
 
-<h1>Create</h1>
+<h2 class="text-uppercase" id="add-head">Assign Course to faculty member</h2>
+<hr id="line" />
+<img id="logo1" class="position-absolute top-1 end-0" src="https://i.imgur.com/uM5PsQc.png" />
 
-<h4>TeachersCourse</h4>
-<hr />
+
+<br />
+<br />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreatePost" asp-controller="TeachersCourse" method="post">
-            
+
             <div class="form-group">
                 <label asp-for="teacher_Ref"></label>
-                <select asp-items="Model.TeachersList" asp-for="teacher_Ref" class="form-control">
+                <select asp-items="Model.TeachersList" asp-for="teacher_Ref" class="form-select">
                     <option value="">--Select--</option>
                 </select>
                 <span asp-validation-for="teacher_Ref" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-        <label asp-for="course_Ref"></label>
-        <select asp-items="Model.CoursesList" asp-for="course_Ref" class="form-control">
-            <option value="">--Select--</option>
-        </select>
-        <span asp-validation-for="course_Ref" class="text-danger"></span>
-    </div>
+                <label asp-for="course_Ref"></label>
+                <select asp-items="Model.CoursesList" asp-for="course_Ref" class="form-select">
+                    <option value="">--Select--</option>
+                </select>
+                <span asp-validation-for="course_Ref" class="text-danger"></span>
+            </div>
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -35,23 +37,61 @@
                 <input asp-for="SemesterStart" class="form-control" />
                 <span asp-validation-for="SemesterStart" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="SemesterEnd" class="control-label"></label>
                 <input asp-for="SemesterEnd" class="form-control" />
                 <span asp-validation-for="SemesterEnd" class="text-danger"></span>
             </div>
-    <br />
+            <br />
             <div class="form-group">
-                <input type="submit" value="Assign" class="btn btn-primary" />
+                <input type="submit" value="Assign" class="btn btn-outline-primary col-md-12 fw-bold" />
             </div>
         </form>
     </div>
 </div>
+<br />
 
-<div>
-    <a asp-action="List">Back to List</a>
-</div>
+<a class="btn btn-secondary" asp-action="List">Back to List</a>
+
+
+<style>
+    #add-head {
+        text-align: center;
+        font-size: 40px;
+        color: papayawhip;
+    }
+
+    #line {
+        width: 60%;
+        margin: 0 25% 0 20%;
+        opacity: 50%;
+        color: #FBF2CF;
+        height: 3px;
+        border-radius: 70%;
+    }
+
+    #logo1 {
+        margin-top: -90px;
+        margin-right: 10px;
+        width: 150px;
+    }
+</style>
+
+@if (TempData["MessageTeachersCourse"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert('@TempData["MessageTeachersCourse"]');
+        };
+    </script>
+}
+
+
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

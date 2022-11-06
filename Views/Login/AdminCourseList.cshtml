@@ -1,13 +1,15 @@
 ﻿@model SeniorProject.ViewModels.CourseListViewModel
 
 
+<br />
+<h1>Courses List</h1>
+<hr id="line" />
+<br />
 
-<h1>View</h1>
 
-<p>
-    <a asp-action="AddCourse" class="btn btn-outline-primary">Add Course</a>
-</p>
-<table class="table">
+    <a asp-action="AdminHome" class="btn btn-secondary">Admin Home</a>
+
+<table id="ta" class="table table-light table-hover">
     <thead>
         <tr>
             <th>
@@ -34,8 +36,8 @@
                         </td>                     
                         
                         <td>
-                            @Html.ActionLink("Edit", "EditCourse", new { id = item.course_Id }) |
-                            @Html.ActionLink("Delete", "DeleteCourse", new {  id = item.course_Id })
+                            @Html.ActionLink("Edit", "EditCourse", new { id = item.course_Id },new {@class="btn btn-warning"}) |
+                            @Html.ActionLink("Delete", "DeleteCourse", new {  id = item.course_Id },new {@class="btn btn-danger"})
                         </td>
 
                     </tr>
@@ -49,3 +51,23 @@
      }
     </tbody>
 </table>
+<br />
+<a asp-action="AddCourse" class="btn btn-primary col-md-12">Add Course</a>
+
+<style>
+    body {
+        background: rgb(157,217,190);
+        background: linear-gradient(180deg, rgba(157,217,190,1) 0%, rgba(130,186,161,1) 41%, rgba(51,140,100,1) 100%);
+    }
+
+    #ta {
+        margin-top: 50px;
+    }
+
+    #line {
+        width: 18%;
+        opacity: 50%;
+        color: #717970;
+        height: 2px;
+    }
+</style>

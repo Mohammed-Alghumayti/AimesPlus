@@ -1,8 +1,5 @@
 ﻿@model SeniorProject.ViewModels.CourseDeleteViewModel
-@{
-    //Change the use from models to viewModels
-    ViewData["Title"] = "DeleteCourse";
-}
+
 
 <h1>deleteCourse</h1>
 
@@ -24,14 +21,15 @@
             @Html.DisplayFor(model => model.Course_Code)
         </dd>
     </dl>
-    
-    <form asp-controller="Login" asp-action="DeleteCoursePost" method="post">
-        <input type="hidden" asp-for="Course_Id" />
-        <input type="hidden" asp-for="Course_Title" />
-        <input type="hidden" asp-for="Course_Code" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+    @{
+        int x = Model.Course_Id;}
+        <form asp-controller="Login" asp-action="DeleteCoursePost" method="post">
+        <input type="hidden" asp-for="@x" />
+       
+        <button type="submit"  class="btn btn-danger" >Delete</button> |
 
-        <br />
-        <a asp-action="AdminCourseList">Back to List</a>
+        <br />        
     </form>
+
+    <a asp-action="AdminCourseList">Back to List</a>
 </div>

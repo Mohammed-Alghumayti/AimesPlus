@@ -5,6 +5,7 @@ namespace SeniorProject.ViewModels
 {
     public class CourseDeleteViewModel
     {
+        [Required]
         [Display(Name = "Course ID")]
         public int Course_Id { get; set; }
 

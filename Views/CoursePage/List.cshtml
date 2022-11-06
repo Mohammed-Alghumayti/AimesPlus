@@ -1,0 +1,581 @@
+﻿@model SeniorProject.ViewModels.CoursePageListViewModel
+
+@{
+    var coursename = ViewData["CourseName"];
+    var count = 0;
+    var countF = 0;
+
+}
+
+
+<h1 class="display-2 font-monospace fw-bold pb-5 mb-4" style="font: bold;">@Context.Session.GetString(Helper.course_CODE) </h1>
+
+<img id="logo1" class="position-absolute top-1 end-0" src="https://i.imgur.com/uM5PsQc.png" />
+
+<br />
+
+
+<section class="mb-5">
+    <h4 class="display-6 fw-bold">Course Topics</h4>
+
+    <table id="ta" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Week No.
+                </th>
+                <th>
+                    Topic
+                </th>
+                <th>
+                    Topic Details
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                try
+                {
+                    foreach (var item in Model.catalog)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.WeekNo)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.catalog_topic)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(m => item.details)
+                            </td>
+
+                            <td>
+                                <form asp-action="DeleteTopicPost" asp-controller="CoursePage" method="post">
+                                    <input asp-for="@item.Id" value="@item.Id" type="hidden" />
+                                    <input name="idCourse" value="@ViewBag.IdCourse" type="hidden" />
+                                    <button class="btn btn-outline-danger" type="submit" value="@item.Id">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                catch (Exception)
+                {
+                    <h1>error</h1>
+
+                }
+            }
+        </tbody>
+
+    </table>
+
+    <a asp-action="AddTopic" type="button" class="btn btn-warning"
+       asp-route-Course="@Context.Session.GetString(Helper.course_CODE)">New Topic</a>
+
+</section>
+
+<hr id="line" />
+<br />
+<br />
+
+<section>
+    <h4 class="display-6 fw-bold">
+        Articulation Matrix
+    </h4>
+
+
+    <table id="tb" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    No.
+                </th>
+                <th>
+                    Clo
+                </th>
+                <th>
+                    LOD
+                </th>
+                <th class="align-middle">
+
+                    SO
+                </th>
+
+                <th class="align-middle">
+                    Assesing SO
+                </th>
+                <th class="align-middle">
+                    Activites
+                </th>
+
+                <th>
+                    Assessment Tools
+                </th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+
+                foreach (var item in Model.Articulation)
+                {
+                    var Assesmentlen = item.AssessmentTools.Count();
+                    var Actlen = item.Activities.Count();
+                    var max = 0;
+                    string type = "";
+                    Boolean buttons = false;
+
+
+                    //checking for the col span by comparing to get highest value and type
+                    if (Assesmentlen >= Actlen)
+                    {
+                        max = Assesmentlen + 1;
+                        type = "Assessment";
+                    }
+                    else
+                    {
+                        max = Actlen + 1;
+                        type = "Activity";
+                    }
+
+
+
+                    <tr>
+                        <td rowspan="@max">
+                            @Html.DisplayFor(m => item.articNum)
+                        </td>
+
+                        <td rowspan="@max">
+                            @Html.DisplayFor(m => item.CLO)
+                        </td>
+
+                        <td rowspan="@max">
+                            @Html.DisplayFor(m => item.LOD_Ref.LOD_Name)
+                        </td>
+
+                        <td rowspan="@max">
+                            @Html.DisplayFor(m => item.SO)
+                        </td>
+
+                        <td rowspan="@max">
+                            @Html.DisplayFor(m => item.Assessing_SO)
+                        </td>
+
+
+
+                        @if (Actlen == 0 && Assesmentlen == 0)
+                        {
+                            <td>--</td>
+                            <td>--</td>
+
+                            <td>
+                                <a class="btn btn-outline-info" asp-action="Create" asp-controller="ArticulationMatrix"
+                       asp-route-idArticulationMatrix="@item.Id">Edit</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger" asp-action="DeleteClo" asp-controller="ArticulationMatrix"
+                       asp-route-idArticulationMatrix="@item.Id">Delete</a>
+                            </td>
+
+                            break;
+                        }
+
+
+                    </tr>
+
+                    @try
+                    {
+
+                        @for (int i = 0; i < max; i++)
+                        {
+
+
+                            if (Actlen == 0 && Assesmentlen == 0)
+                            {
+                                break;
+                            }
+
+                            <tr>
+                                @if (Actlen == 0)
+                                {
+
+                                    <td>
+                                        --
+                                    </td>
+
+                                }
+
+                                else
+                                {
+                                    <td>
+                                        @item.Activities[i].activity_Ref.Name
+                                    </td>
+                                    Actlen = Actlen - 1;
+
+                                }
+
+
+                                @if (Assesmentlen == 0)
+                                {
+                                    <td>
+                                        --
+                                    </td>
+
+                                }
+
+                                else
+                                {
+                                    @if (item.AssessmentTools[i].AssessmentTools_Ref.name == "Exam" && count <= 0)
+                                    {
+                                        <td>
+                                            @item.AssessmentTools[i].AssessmentTools_Ref.name
+                                            ( @item.AssessmentTools[i].WeekNo )
+                                        </td>
+                                        <form>
+                                            <input name="coursecode" type="hidden" value="@Model.Articulation[0].course_Ref.course_Code" />
+                                            <input name="exam" type="hidden" value="Mid" />
+                                            <button id="pdf" asp-controller="CoursePage" asp-action="PDF" class="btn" type="submit">
+                                                Generate MID Cover Page
+                                            </button>
+                                        </form>
+
+                                        count++;
+
+                                    }
+
+                                    else if (item.AssessmentTools[i].AssessmentTools_Ref.name == "Comprehensive Final Exam" && countF <= 0)
+                                    {
+                                        <td>
+                                            @item.AssessmentTools[i].AssessmentTools_Ref.name
+                                            ( @item.AssessmentTools[i].WeekNo )
+                                        </td>
+                                        <form>
+                                            <input name="coursecode" type="hidden" value="@Model.Articulation[0].course_Ref.course_Code" />
+                                            <input name="exam" type="hidden" value="Final" />
+                                            <button id="pdf" asp-controller="CoursePage" asp-action="PDF" class="btn" type="submit">
+                                                Generate Final Cover Page
+                                            </button>
+                                        </form>
+
+                                        countF++;
+                                    }
+
+                                    else
+                                    {
+                                        <td>
+                                            @item.AssessmentTools[i].AssessmentTools_Ref.name
+                                            ( @item.AssessmentTools[i].WeekNo )
+                                        </td>
+                                    }
+
+                                    Assesmentlen = Assesmentlen - 1;
+
+                                }
+
+
+
+                                @if (buttons == false)
+                                {
+                                    <td>
+                                        <a class="btn btn-outline-info" asp-action="Create" asp-controller="ArticulationMatrix"
+                       asp-route-idArticulationMatrix="@item.Id">Edit</a>
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-outline-danger" asp-action="DeleteClo" asp-controller="ArticulationMatrix"
+                       asp-route-idArticulationMatrix="@item.Id">Delete</a>
+                                    </td>
+
+                                    buttons = true;
+                                }
+                                else
+                                {
+                                    <td></td>
+                                    <td></td>
+                                }
+
+                            </tr>
+
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        <partial>Error catched</partial>
+                    }
+
+                }
+            }
+
+        </tbody>
+
+    </table>
+    <br />
+    <a asp-action="Create" asp-controller="ArticulationMatrix" type="button" class="btn btn-warning "
+       asp-route-Course="@Context.Session.GetString(Helper.course_CODE)">Add CLO</a>
+
+    <br />
+
+
+    @{
+        /////////////////////////////////////////////////////////////////////////////////////////////////}
+    }
+
+</section>
+<br />
+<br />
+<hr id="line" />
+<br />
+<br />
+
+<section>
+
+    @{
+        double total = 0;
+
+        foreach (var item in Model.GradeDist)
+        {
+            if (item.percentage != null)
+            {
+                total = total + (double)item.percentage;
+            }
+
+        }
+        string color = "black";
+
+        if (total < 100 && total > 0)
+        {
+            color = "Orange";
+        }
+        else if (total > 100)
+        {
+            color = "Red";
+        }
+
+    }
+
+
+    <h4 class="display-6 fw-bold">
+        Grade Distribution
+    </h4>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+
+                <th scope="col">Week</th>
+                <th scope="col">Assesment Tools</th>
+
+
+                <th style="color:@color;" scope="col">@total %</th>
+
+
+                <th scope="col">SO1</th>
+                <th scope="col">SO2</th>
+                <th scope="col">SO3</th>
+                <th scope="col">SO4</th>
+                <th scope="col">SO5</th>
+                <th scope="col">SO6</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                foreach (var item in Model.GradeDist)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(m => item.week_Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Assessment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.percentage)
+                        </td>
+
+                        @if (item.assessing_SO == true && item.SOchoice == 1)
+                        {
+                            <td class="bg-warning">
+                                @Html.DisplayFor(m => item.SO1)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.SO1)
+                            </td>
+
+                        }
+
+                        <!--========================================================================-->
+                        @if (item.assessing_SO == true && item.SOchoice == 2)
+                        {
+                            <td class="bg-warning">
+                                @Html.DisplayFor(m => item.SO2)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.SO2)
+                            </td>
+
+                        }
+
+                        <!--========================================================================-->
+                        @if (item.assessing_SO == true && item.SOchoice == 3)
+                        {
+                            <td class="bg-warning">
+                                @Html.DisplayFor(m => item.SO3)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.SO3)
+                            </td>
+
+                        }
+
+                        <!--========================================================================-->
+                        @if (item.assessing_SO == true && item.SOchoice == 4)
+                        {
+                            <td class="bg-warning">
+                                @Html.DisplayFor(m => item.SO4)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.SO4)
+                            </td>
+
+                        }
+
+                        <!--========================================================================-->
+                        @if (item.assessing_SO == true && item.SOchoice == 5)
+                        {
+                            <td class="bg-warning">
+                                @Html.DisplayFor(m => item.SO5)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.SO5)
+                            </td>
+
+                        }
+
+                        <!--========================================================================-->
+                        @if (item.assessing_SO == true && item.SOchoice == 6)
+                        {
+                            <td class="bg-warning">
+                                @Html.DisplayFor(m => item.SO6)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(m => item.SO6)
+                            </td>
+
+                        }
+
+
+                        <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="@("#EditModal-" + item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">
+                                Edit
+                            </button>
+                            @{
+                                GradeDistribution gradeD = new GradeDistribution
+                {
+                    Id = item.Id,
+                    Assessment = item.Assessment,
+                    assessing_SO = item.assessing_SO,
+                    coursecode = item.coursecode,
+                    percentage = item.percentage,
+                    SO1 = item.SO1,
+                    SO2 = item.SO2,
+                    SO3 = item.SO3,
+                    SO4 = item.SO4,
+                    SO5 = item.SO5,
+                    SO6 = item.SO6,
+                    SOchoice = item.SOchoice,
+                    week_Number = item.week_Number
+                };
+
+                            }
+
+                            @await Html.PartialAsync("_EditGradesPartialView", gradeD)
+
+                        </td>
+
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</section>
+
+
+
+<style>
+
+    #logo1 {
+        margin-top: -190px;
+        margin-right: 10px;
+        width: 150px;
+    }
+
+    table, tr, td, th {
+        background-color: white;
+        margin-top: 7px;
+    }
+
+    #ac {
+        color: red;
+    }
+
+    body {
+        background-image: url("https://i.imgur.com/SHIfzqN.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #pdf {
+        margin-left: 5px;
+        background-color: lightcoral;
+        font-weight: 500;
+    }
+
+        #pdf:hover {
+            background-color: lightgoldenrodyellow;
+        }
+
+    #line {
+        opacity: 70%;
+        height: 2.5px;
+        width: 1000px;
+        margin: auto;
+    }
+
+</style>
+
+

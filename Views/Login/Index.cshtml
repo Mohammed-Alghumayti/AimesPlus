@@ -1,5 +1,6 @@
 ﻿@model SeniorProject.Models.FacultyMembers
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Log in</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
+    <!-- fontawesome style -->
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+
 </head>
+<img id="logo1" class="position-absolute top-0 start-50 translate-middle" src="https://i.imgur.com/uM5PsQc.png" />
+<br />
+<br />
+
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <p><b>Aims</b>+plus</p>
-        </div>
         <!-- /.login-logo -->
         <div class="card">
+            <img width="500px" style="margin-left: 50px" src="https://i.imgur.com/JNgVMaS.jpg" />
+
             <div class="card-body login-card-body">
+
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form asp-controller="Login" asp-action="check" method="post">
@@ -31,10 +34,12 @@
                         <input type="text" class="form-control" placeholder="Academic ID" asp-for="AcademicID">
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                                <span class="fa-sharp fa-solid fa-user"></span>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" placeholder="Password" asp-for="Password">
                         <div class="input-group-append">
@@ -54,16 +59,66 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn ">Sign In</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
-            
-                <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
-                </p>               
+
+
             </div>
+
+            <style>
+                        #logo1 {
+                           margin-top: 150px;
+                           width: 200px;
+                }
+
+
+                .buttons{
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .btn {
+                    min-width: 150px;
+                    height: 50px;
+                    color: #fff;
+                    padding: 5px 10px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    display: inline-block;
+                    outline: none;
+                    border-radius: 25px;
+                    z-index: 0;
+                    background: #179c7f;
+                    overflow: hidden;
+                    border: 2px solid green;
+                    color: #fff;
+                  }
+
+                  .btn:hover {
+                    color: black;
+                  }
+                  .btn:hover:after {
+                    width: 100%;
+                  }
+                  .btn:after {
+                    content: "";
+                    position: absolute;
+                    z-index: -1;
+                    transition: all 0.3s ease;
+                    left: 0;
+                    top: 0;
+                    width: 0;
+                    height: 100%;
+                    background: #c9ff91;
+                  }
+            </style>
+
+
             @if (TempData["Message"] != null)
             {
                 <script type="text/javascript">
@@ -72,15 +127,9 @@
                     };
                 </script>
             }
-            
+
         </div>
     </div>
-    <!-- /.login-box -->
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
+
 </body>
 </html>

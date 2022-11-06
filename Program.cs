@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.Configuration;
@@ -13,8 +15,32 @@ var builder = WebApplication.CreateBuilder(args);
                options => options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbConnection")));
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NToastNotify.NotyOptions()
+{
+    ProgressBar = true,
+    Timeout = 5000,
+    Theme = "mint"
+    
+});
 
+
+// Add ToastNotification
+builder.Services.AddNotyf(configure =>
+{
+    configure.DurationInSeconds = 5;
+    configure.IsDismissable = true;
+    configure.Position = NotyfPosition.TopRight;
+});
+
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+  //options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -26,6 +52,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -33,6 +60,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseNToastNotify();
+app.UseNotyf();
+
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
